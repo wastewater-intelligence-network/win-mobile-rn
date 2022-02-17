@@ -61,7 +61,7 @@ export default class Authentication {
 
     isSessionActive() {
         return new Promise((resolve, reject) => { 
-            SecureStore.getItemAsync('token')
+            AsyncStorage.getItem('token')
                 .then(token => {
                     if(token) {
                         resolve(true)

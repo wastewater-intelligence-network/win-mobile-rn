@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
-
 import {Modal, Text, View, TouchableOpacity} from 'react-native';
-
-
 
 export default function WinCustomAlert({
   displayMode,
