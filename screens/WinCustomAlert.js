@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Modal, Text, View, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default function WinCustomAlert({
   displayMode,
@@ -37,12 +38,12 @@ export default function WinCustomAlert({
               {displayMode == 'success' ? (
                 <>
                   {/* <Feather name="alert-triangle" size={30} color="black" /> */}
-                  {/* <AntDesign name="checkcircleo" size={40} color="green" /> */}
+                   <Icon name="checkmark-circle-outline" size={40} color="green" /> 
                 </>
               ) : (
                 <>
                   {/* <Feather name="alert-triangle" size={30} color="red" /> */}
-                  {/* <MaterialIcons name="cancel" size={40} color="red" /> */}
+                   <Icon name="close-circle-outline" size={40} color="red" /> 
                 </>
               )}
               <Text style={{fontSize: 20, marginTop: 8}}>{displayMsg}</Text>

@@ -6,6 +6,7 @@ import Login from './screens/Login/Login';
 import Constants from './screens/constants';
 import Home from './screens/Home/Home';
 import SampleList from './screens/SampleList/SampleList';
+import SampleCollector from './screens/SampleCollector/SampleCollector';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,12 @@ export default function App() {
 					component={Home}
 					options={{headerShown: false}}
 				/>
+				<Stack.Screen
+					name={Constants.screenName.SampleCollector}
+					component={SampleCollector}
+					options={{headerShown: false}}
+				/>
+				
 				<Stack.Screen
 					name={Constants.screenName.SamplesList}
 					component={SampleList}
