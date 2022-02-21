@@ -175,7 +175,6 @@ export default function SampleCollector({ navigation }) {
 	}
 
     useEffect(() => {
-      console.log('use effect called');
       requestLocationPermission();
     }, []);
 
@@ -183,21 +182,19 @@ export default function SampleCollector({ navigation }) {
     return(
         <View style= {{flex: 1, backgroundColor: 'black'}}>
             <Text>Sample collector page {latitude}</Text>
-            { locationAccessed == true ? <QRCodeScanner onRead={scanned ? undefined : onSuccess} style={{ height: "100%", width: Dimensions.get('window').width}}/>: console.log('world')}
-            { locationAccessed == true? <BarcodeMask
-						width={300} height={300} showAnimatedLine={false} outerMaskOpacity={0.9}
-					/>: console.log('nothing')}
+            { locationAccessed == true ? <QRCodeScanner onRead={scanned ? undefined : onSuccess} style={{ height: "100%", width: Dimensions.get('window').width}}/>: undefined}
+            { locationAccessed == true? <BarcodeMask width={300} height={300} showAnimatedLine={false} outerMaskOpacity={0.9}/>: undefined }
 
           <Overlay isVisible={location === undefined}>
             <ActivityIndicator size="large" color="#0000ff" />
             <Text>Getting your location</Text>
-				  </Overlay>
+		  </Overlay>
 
-          <Overlay
+         	 <Overlay
 				 	style={styles.sampleDataOverlay}
 					isVisible={sampleDataOverlayVisible} 
 					onBackdropPress={() => {toggleOverlay('sampleDataOverlay'); setScanned(false)}}
-				>
+		       >
 					<Text style={styles.sampleDataHeading}>Additional Data</Text>
 					<TextInput
 						style={styles.sampleDataInput}
@@ -230,32 +227,31 @@ export default function SampleCollector({ navigation }) {
 					>
 					<Text style={styles.buttonText}>Submit</Text>
 					</TouchableHighlight>
-				</Overlay>
+			</Overlay>
 
-        <Overlay
+       			 <Overlay
 				 	style={styles.sampleDataOverlay}
 					isVisible={listOverlayVisible} 
 					onBackdropPress={() => {toggleOverlay('listOverlay'); setScanned(false)}}
-				>
+				 >
 					<Text style={styles.pointListHeading}>Multiple collection points nearby. Please pick one</Text>
 					{renderCollectionPointList()}
 				</Overlay>
 
-        <WinCustomAlert
+     			   <WinCustomAlert
 						displayMode={'success'}
 						displayMsg={'Save successfull'}
 						visibility={showSuccessPopup}
 						dismissAlert={setShowSuccessPopup}
 						onPressHandler = {() => saveToDB()}
 					/>
-				<WinCustomAlert
-					displayMode={'failed'}
-					displayMsg={'Record with container id\n or collection point exist'}
-					visibility={showErrPopup}
-					dismissAlert={setShowErrPopup}
-					onPressHandler = {() => errorAction() }
-				/>
-
+					<WinCustomAlert
+						displayMode={'failed'}
+						displayMsg={'Record with container id\n or collection point exist'}
+						visibility={showErrPopup}
+						dismissAlert={setShowErrPopup}
+						onPressHandler = {() => errorAction() }
+					/>
         </View>
     );
 };

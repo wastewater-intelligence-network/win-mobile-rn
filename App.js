@@ -7,6 +7,7 @@ import Constants from './screens/constants';
 import Home from './screens/Home/Home';
 import SampleList from './screens/SampleList/SampleList';
 import SampleCollector from './screens/SampleCollector/SampleCollector';
+import SampleTransporter from './screens/SampleTransporter/SampleTransporter';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,17 @@ export default function App() {
 				<Stack.Screen
 					name={Constants.screenName.SampleCollector}
 					component={SampleCollector}
+					options={{headerShown: false}}
+				/>
+
+				<Stack.Screen
+					name={Constants.screenName.SampleTransporter}
+					component={SampleTransporter}
+					options={{headerShown: false}}
+				/>
+				<Stack.Screen
+					name={Constants.screenName.SampleAcceptance}
+					component={SampleTransporter}
 					options={{headerShown: false}}
 				/>
 				
