@@ -142,39 +142,7 @@ export default function Home({navigation, route}) {
         }
 	});
 
-   /* const adminRoles = {
-        "collector": [
-            collectorObj
-        ],
-        "transporter": [
-            transporterObj
-        ],
-        "technician": [
-            technicianObj
-        ],
-        "list":[ 
-            listObj
-        ],
-            // {
-            //     "text": "Finish\nTest",
-            //     "icon": LabTestIcon,
-            //     "navigate": undefined
-            // }
-    }
-
-
-
-    const collectorRoles = {
-        "collector": [collectorObj],
-        "list":[listObj],
-    }
-
-    const transporterRoles = {
-        "transporter": [transporterObj],
-        "technician": [technicianObj],
-        "list":[listObj],
-    }
-*/
+  
     const renderFinalTaskBoxes = () => {
 
         var view = []

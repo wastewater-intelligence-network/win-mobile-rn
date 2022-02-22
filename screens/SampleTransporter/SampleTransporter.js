@@ -18,6 +18,8 @@ import BarcodeMask from 'react-native-barcode-mask';
 
 import Constants from '../constants';
 import SampleTracking from '../../controllers/sample_tracking';
+import WinCustomAlert from '../WinCustomAlert';
+
 
 export default function SampleCollector({ route, navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -25,6 +27,10 @@ export default function SampleCollector({ route, navigation }) {
 	const [qrData, setQrData] = useState(undefined);
 	const [reactiveQR, setReactiveQR] = useState(true);
 	const [scanner, setScanner] = useState(null);
+	const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+	const [showErrPopup, setShowErrPopup] = useState(false);
+	const [serverMessage, setServerMessage] = useState('');
+
 	//const scanner = useRef(0);
 
     const requestCameraPermission = async () => {
@@ -81,9 +87,7 @@ export default function SampleCollector({ route, navigation }) {
 					onPress: () => {
 						setScanned(false);
 						setReactiveQR(false)
-						//scanner.rea
 						scanner.reactivate();
-
 					}
 				}
 			]
@@ -94,16 +98,21 @@ export default function SampleCollector({ route, navigation }) {
 		sampleTracking.sampleInTransit(containerId, navigation)
 			.then((res) => {
 				if(res.status === 200) {
-					alertUser(
-						"In Transit",
-						"Sample in container ID " + containerId + " marked in-transit"
-					)
+					// alertUser(
+					// 	"In Transit",
+					// 	"Sample in container ID " + containerId + " marked in-transit"
+					// )
+					let message = "Sample in container ID " + containerId + " marked in-transit"
+					setServerMessage(message)
+            		setShowSuccessPopup(true);
 					
 				} else {
-					alertUser(
-						"Issue with adding the sample",
-						res.message
-					)
+					// alertUser(
+					// 	"Issue with adding the sample",
+					// 	res.message
+					// )
+					setServerMessage(res.message)
+            		setShowErrPopup(true);
 				}
 			})
 	}
@@ -112,18 +121,30 @@ export default function SampleCollector({ route, navigation }) {
 		sampleTracking.sampleAcceptedInLab(containerId, navigation)
 			.then((res) => {
 				if(res.status === 200) {
-					alertUser(
-						"Accepted in the lab",
-						"Sample in container ID " + containerId + " received in the lab"
-					)
+					// alertUser(
+					// 	"Accepted in the lab",
+					// 	"Sample in container ID " + containerId + " received in the lab"
+					// )
+					let message = "Sample in container ID " + containerId + " received in the lab"
+					setServerMessage(message)
+            		setShowSuccessPopup(true);
+					
 				} else {
-					alertUser(
-						"Issue with adding the sample",
-						res.message
-					)
+					// alertUser(
+					// 	"Issue with adding the sample",
+					// 	res.message
+					// )
+					setServerMessage(res.message)
+            		setShowErrPopup(true);
 				}
 			})
 			.catch(console.log)
+	}
+
+	const configureScan = () => {
+		setScanned(false);
+		setReactiveQR(false)
+		scanner.reactivate();
 	}
 
 
@@ -163,6 +184,21 @@ export default function SampleCollector({ route, navigation }) {
 						/>
 
 					</View> 
+
+					<WinCustomAlert
+						displayMode={'success'}
+						displayMsg={serverMessage}
+						visibility={showSuccessPopup}
+						dismissAlert={setShowSuccessPopup}
+						onPressHandler = {() => configureScan()}
+					/>
+					<WinCustomAlert
+						displayMode={'failed'}
+						displayMsg={serverMessage}
+						visibility={showErrPopup}
+						dismissAlert={setShowErrPopup}
+						onPressHandler = {() => configureScan() }
+					/>
 						   
         </View>
 );

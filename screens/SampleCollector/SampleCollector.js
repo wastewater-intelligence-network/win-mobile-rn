@@ -30,7 +30,6 @@ export default function SampleCollector({ navigation }) {
     const [longitude, setlongitude] = useState();
     const [locationAccessed, setLocationAccessed] = useState(false)
 
-
     const [location, setLocation] = useState(undefined);
     const [sampleDataOverlayVisible, setSampleDataOverlayVisible] = useState(false);
     const [listOverlayVisible, setListOverlayVisible] = useState(false);
@@ -46,7 +45,8 @@ export default function SampleCollector({ navigation }) {
   	const [inflowValue, setInflowValue] = useState(undefined)
 
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-	  const [showErrPopup, setShowErrPopup] = useState(false);
+	const [showErrPopup, setShowErrPopup] = useState(false);
+	const [serverMessage, setServerMessage] = useState('');
 
 
     const handleSampleDataSubmit = (pointId) => {
@@ -77,8 +77,10 @@ export default function SampleCollector({ navigation }) {
             toggleOverlay('listOverlay')
             return
           } else if(res.status !== 200) {
+			setServerMessage(res.message)
             setShowErrPopup(true);
           } else {
+			setServerMessage(res.message)
             setShowSuccessPopup(true)
           }
         })
@@ -240,14 +242,14 @@ export default function SampleCollector({ navigation }) {
 
      			   <WinCustomAlert
 						displayMode={'success'}
-						displayMsg={'Save successfull'}
+						displayMsg={serverMessage}
 						visibility={showSuccessPopup}
 						dismissAlert={setShowSuccessPopup}
 						onPressHandler = {() => saveToDB()}
 					/>
 					<WinCustomAlert
 						displayMode={'failed'}
-						displayMsg={'Record with container id\n or collection point exist'}
+						displayMsg={serverMessage}
 						visibility={showErrPopup}
 						dismissAlert={setShowErrPopup}
 						onPressHandler = {() => errorAction() }
