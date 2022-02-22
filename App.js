@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import SplashScreen from 'react-native-splash-screen';
 import Login from './screens/Login/Login';
 import Constants from './screens/constants';
 import Home from './screens/Home/Home';
@@ -9,9 +10,14 @@ import SampleList from './screens/SampleList/SampleList';
 import SampleCollector from './screens/SampleCollector/SampleCollector';
 import SampleTransporter from './screens/SampleTransporter/SampleTransporter';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+	useEffect(() => {
+		SplashScreen.hide();
+	  }, []);
 	
 	return (
 		<NavigationContainer>
