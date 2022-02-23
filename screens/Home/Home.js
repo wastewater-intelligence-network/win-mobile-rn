@@ -6,9 +6,14 @@ import {
 	TextInput,
 	Image,
 	TouchableHighlight,
-	ToastAndroid
+	ToastAndroid,
+    BackHandler,
+    Alert
 } from 'react-native';
 import Constants from '../constants';
+import Realm from 'realm';
+import Util from '../Util';
+import DBManager from '../DBManager';
 
 import SampleCollectionIcon from '../../assets/safety-suit.png';
 import TransporterIcon from '../../assets/delivery-man.png';
@@ -30,7 +35,32 @@ export default function Home({navigation, route}) {
     useEffect(() => {
         console.log('use effect called');
         setFinalRoles(filteredCollectionList);
+        saveInDB();
+
+        const backAction = () => {
+            if (navigation.isFocused()) {
+                // Alert.alert("Hold on!", "Are you sure you want to exit the app?", [
+                //     {
+                //         text: "Cancel",
+                //         onPress: () => null,
+                //         style: "cancel"
+                //     },
+                //     { text: "YES", onPress: () => BackHandler.exitApp() }
+                // ]);
+                BackHandler.exitApp()
+                return true;
+            }
+    
+        };
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () => backHandler.remove();
+
 	}, []);
+
+
+    const saveInDB = () => {
+        DBManager.saveRoles(route.params);
+    }
 
     const inititealization = () => {
        makeFilterList();

@@ -41,6 +41,10 @@ var Constants = {
     storageKey: {
         token: "token",
         timestamp: "timestamp"
+    },
+
+    schemaName: {
+        UserDetails: "UserDetails"
     }
 }
 

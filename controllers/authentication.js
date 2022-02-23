@@ -5,6 +5,8 @@ import base64 from 'react-native-base64';
 import Fetch from './fetch';
 import Constants from '../screens/constants';
 import Util from '../screens/Util';
+import DBManager from '../screens/DBManager';
+import Realm from 'realm';
 
 export default class Authentication {
     login(username, password) {
@@ -23,11 +25,11 @@ export default class Authentication {
                 .then(res => res.json())
                 .then(res => {
                     if(res.token) {
+                        let timestamp = res.tokenExpiryTimestamp;
+                        DBManager.saveInLocalDB(res.token, timestamp.toString());
                         AsyncStorage.setItem(Constants.storageKey.token, res.token)
                        // SecureStore.setItemAsync(Constants.storageKey.token, res.token)
-                        let timestamp = res.tokenExpiryTimestamp;
                         AsyncStorage.setItem(Constants.storageKey.timestamp, timestamp.toString());
-
                        // SecureStore.setItemAsync(Constants.storageKey.timestamp, timestamp.toString())
                         //need to set time stamp from server
                         console.log('+++come in response');

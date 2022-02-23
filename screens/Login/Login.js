@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	Text, 
@@ -6,17 +6,24 @@ import {
 	TextInput,
 	Image,
 	TouchableHighlight,
-	ToastAndroid
+	ToastAndroid,
 } from 'react-native';
-
 
 import WinLogoColor from '../../assets/win_logo_color.png';
 import Authentication from '../../controllers/authentication';
 import Constants from '../constants';
+import Util from '../Util';
+import DBManager from '../DBManager';
 
 export default function Login({navigation}) {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
+
+	useEffect (() => {
+		console.log('useeffect login called');
+		//isValidSession();
+	
+	},[]);
 
 	const styles = StyleSheet.create({
 		container: {
@@ -55,9 +62,7 @@ export default function Login({navigation}) {
 			fontFamily: "Quicksand",
 			color: "#756BDE"
 		}
-	});
-
-	
+	});	
 
 	const handleLogin = () => {
 		var auth = new Authentication()
@@ -74,9 +79,17 @@ export default function Login({navigation}) {
 				}
 			})
 	}
-	
+
+	const isValidSession = () => {
+		let isValid = DBManager.isValidSession(navigation);
+		console.log(` is session valid=${isValid}`);
+	}
+	isValidSession();
+
+
 	return (
-		<View style={styles.container}>
+		
+		<View style={styles.container} >
 			<Image
 				source={WinLogoColor}
 				style={styles.winLogo}
@@ -115,7 +128,8 @@ export default function Login({navigation}) {
 			>
 				<Text style={styles.buttonText}>LOGIN</Text>
 			</TouchableHighlight>
-			
+
 		</View>
+			
 	);
 }
