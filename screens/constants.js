@@ -4,7 +4,8 @@ var Constants = {
     },
     alertMessages: {
         invalidSession: "Invalid session, Please try to login",
-        error: "Error!!"
+        error: "Error!!",
+        invalidQRCode: "Invalid QR code scanned"
     },
     colors: {
         primary: "#756BDE",
@@ -46,6 +47,10 @@ var Constants = {
 
     schemaName: {
         UserDetails: "UserDetails"
+    },
+
+    scanCharater: {
+        length: 5
     }
 }
 

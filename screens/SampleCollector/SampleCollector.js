@@ -23,6 +23,8 @@ import Constants from '../constants';
 import WinCustomAlert from '../WinCustomAlert';
 import SampleTracking from '../../controllers/sample_tracking';
 import BarcodeMask from 'react-native-barcode-mask';
+import DBManager from '../DBManager';
+import Util from '../Util';
 
 export default function SampleCollector({ navigation }) {
 
@@ -123,9 +125,14 @@ export default function SampleCollector({ navigation }) {
     onSuccess = e => {
       console.log(`capture data=${e.data}`);
       setScanned(true)
-		  setQrData(e.data)
-	  	toggleOverlay('sampleDataOverlay')
-
+	  setQrData(e.data)
+	  if (Util.isValidQRScan(e.data)) {
+		toggleOverlay('sampleDataOverlay')
+	  } else {
+		setServerMessage(Constants.alertMessages.invalidQRCode)
+		setShowErrPopup(true);
+	  }
+	  
    }
 
    const toggleOverlay = (overlay) => {
@@ -146,6 +153,7 @@ export default function SampleCollector({ navigation }) {
 
   const errorAction = () => {
 		setScanned(false);
+		navigation.goBack();
 	}
 
   const renderCollectionPointList = () => {

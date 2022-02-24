@@ -19,6 +19,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import Constants from '../constants';
 import SampleTracking from '../../controllers/sample_tracking';
 import WinCustomAlert from '../WinCustomAlert';
+import Util from '../Util';
 
 
 export default function SampleCollector({ route, navigation }) {
@@ -152,20 +153,20 @@ export default function SampleCollector({ route, navigation }) {
         console.log(`capture data=${e.data}`);
         setScanned(true)
 		setQrData(e.data)
-		console.log(e.data)
 		setReactiveQR(false)
-		console.log(route.name)
 
-        let sampleTracking = new SampleTracking()
-
-		if(route.name === Constants.screenName.SampleTransporter) {
-			console.log(`coming in trasnporter=${e.data}`)
-			updateStatusToInTransit(sampleTracking, e.data)
-		} else if(route.name === Constants.screenName.SampleAcceptance) {
-			console.log(`coming in acceptance=${e.data}`)
-			updateStatusToAccepted(sampleTracking, e.data)
+        if (Util.isValidQRScan(e.data)) {
+			let sampleTracking = new SampleTracking()
+			if(route.name === Constants.screenName.SampleTransporter) {
+				updateStatusToInTransit(sampleTracking, e.data)
+			} else if(route.name === Constants.screenName.SampleAcceptance) {
+				updateStatusToAccepted(sampleTracking, e.data)
+			}
+		} else {
+			setServerMessage(Constants.alertMessages.invalidQRCode)
+            setShowErrPopup(true);
 		}
-  
+
      }
 
     // Return the View
