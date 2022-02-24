@@ -1,5 +1,6 @@
 import Realm from "realm";
 import Constants from "./constants";
+import Util from "./Util";
 
 export default class DBManager {
     
@@ -11,8 +12,19 @@ export default class DBManager {
             }).then(realm => {
             let objects = realm.objects(Constants.schemaName.UserDetails);
             if (objects.length > 0) {
-                navigation.navigate('Home', objects[0].roles);
-            } 
+                let token = objects[0].token;
+                let timeStamp = objects[0].expiryTime;
+                let serverTimeStamp = parseInt (timeStamp);
+                let currentMobileTimeStamp = Util.getCurrentTimeStamp()
+                console.log(`${Constants.debugDesc.text} Server time stamp=${serverTimeStamp}`);
+                console.log(`${Constants.debugDesc.text} Mobile time stamp=${currentMobileTimeStamp}`);
+                let roles = objects[0].roles;
+                if (serverTimeStamp > currentMobileTimeStamp) {
+                    navigation.navigate(Constants.screenName.Home, objects[0].roles);
+                } else {
+                    navigation.navigate(Constants.screenName.Login);
+                }
+            }
         });
     }
 
@@ -60,6 +72,20 @@ export default class DBManager {
                 realm.delete(objects[0]);
                 console.log('there');
                 navigation.navigate(Constants.screenName.Login)
+                });
+            } 
+        });
+    }
+
+    static clearLocalDB() {
+
+        Realm.open({
+            schema: [DBManager.schema]
+            }).then(realm => {
+            let objects = realm.objects(Constants.schemaName.UserDetails);
+            if (objects.length > 0) {
+                realm.write(() => {
+                realm.delete(objects[0]);
                 });
             } 
         });

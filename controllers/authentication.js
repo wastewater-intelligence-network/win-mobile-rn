@@ -74,9 +74,42 @@ export default class Authentication {
         })
     }
 
+
+    getNewSessionToken(resource) {
+
+        return new Promise((resolve, reject) => {
+            Realm.open({
+                schema: [DBManager.schema]
+                }).then(realm => {
+                let objects = realm.objects(Constants.schemaName.UserDetails);
+                console.log('coming here in get session block');
+                if (objects.length > 0) {
+                  let token = objects[0].token;
+                  if(token && resource != Constants.endPoints.login) {
+                    let serverTimeStamp = parseInt (objects[0].expiryTime)
+                    let currentMobileTimeStamp = Util.getCurrentTimeStamp()
+                    console.log(`${Constants.debugDesc.text} Server time stamp=${serverTimeStamp}`);
+                    console.log(`${Constants.debugDesc.text} Mobile time stamp=${currentMobileTimeStamp}`);
+                    if (serverTimeStamp > currentMobileTimeStamp) {
+                        console.log(`${Constants.debugDesc.text} comes under resolve`);
+                        resolve(token)
+                    } else {
+                        console.log(`${Constants.debugDesc.text} comes under reject`)
+                         // need to update DB or clear DB
+                        DBManager.clearLocalDB();
+                        resolve(undefined)
+                    }
+                }
+             } else if (resource === Constants.endPoints.login) {
+                console.log('come here in condition++++');
+                resolve(undefined)
+            }
+            });
+        });
+    }
+
     getSessionToken(resource) {
         return new Promise((resolve, reject) => { 
-            console.log(`${Constants.debugDesc.text} resources=${resource} `)
             AsyncStorage.getItem(Constants.storageKey.token)
                 .then(token => {
                     console.log(`token=${token}`);

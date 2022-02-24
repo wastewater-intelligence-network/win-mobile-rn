@@ -16,7 +16,8 @@ var Constants = {
         SampleTransporter: 'SampleTransporter',
         SampleAcceptance: 'SampleAcceptance',
         SamplesList: 'SamplesList',
-        Login: 'Login'
+        Login: 'Login',
+        Home: 'Home'
     },
     status: {
         sampleCollected: 'sample_collected',

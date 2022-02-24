@@ -40,18 +40,9 @@ export default function Home({navigation, route}) {
 
         const backAction = () => {
             if (navigation.isFocused()) {
-                // Alert.alert("Hold on!", "Are you sure you want to exit the app?", [
-                //     {
-                //         text: "Cancel",
-                //         onPress: () => null,
-                //         style: "cancel"
-                //     },
-                //     { text: "YES", onPress: () => BackHandler.exitApp() }
-                // ]);
                 BackHandler.exitApp()
                 return true;
             }
-    
         };
         const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
         return () => backHandler.remove();
