@@ -8,7 +8,8 @@ import {
 	TouchableHighlight,
 	ToastAndroid,
     BackHandler,
-    Alert
+    Alert,
+    TouchableOpacity
 } from 'react-native';
 import Constants from '../constants';
 import Realm from 'realm';
@@ -253,7 +254,9 @@ export default function Home({navigation, route}) {
             <View style={styles.taskBoxContainer}>
                 {renderFinalTaskBoxes()}
             </View>
-            <Text style={styles.signout}>Sign Out</Text>
+            <TouchableOpacity onPress={() => DBManager.logout(navigation)}>
+              <Text style={styles.signout}>Sign Out</Text>
+            </TouchableOpacity>
 		</View>
 	);
 }

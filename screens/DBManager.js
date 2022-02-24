@@ -36,7 +36,6 @@ export default class DBManager {
     }
 
     static saveRoles(roles) {
-        console.log(`roles=${roles}`);
         Realm.open({
             schema: [DBManager.schema]
             }).then(realm => {
@@ -44,6 +43,23 @@ export default class DBManager {
             if (objects.length > 0) {
                 realm.write(() => {
                 objects[0].roles = roles;
+                });
+            } 
+        });
+    }
+
+    static logout(navigation) {
+
+        Realm.open({
+            schema: [DBManager.schema]
+            }).then(realm => {
+            let objects = realm.objects(Constants.schemaName.UserDetails);
+            if (objects.length > 0) {
+                realm.write(() => {
+                console.log('here');
+                realm.delete(objects[0]);
+                console.log('there');
+                navigation.navigate(Constants.screenName.Login)
                 });
             } 
         });

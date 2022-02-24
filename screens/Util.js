@@ -15,6 +15,8 @@ export default class Util {
         return Math.floor(Date.now() / 1000)
     }
 
+   
+
     // static isValidSession(navigation) {
     //     Realm.open({
     //         schema: [{name: 'UserDetails', properties: {token: 'string', expiryTime: 'string', roles:'string[]'}}]
