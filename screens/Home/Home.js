@@ -95,6 +95,23 @@ export default function Home({navigation, route}) {
 
     };
 
+    const signoutHandler = () => {
+        Alert.alert(
+            "Alert!",
+            "Do you want to logout?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => DBManager.logout(navigation)
+                }
+            ]
+        );
+    }
+
     const collectorObj = {
         "text": "Sample\nCollection",
         "icon": SampleCollectionIcon,
@@ -245,7 +262,7 @@ export default function Home({navigation, route}) {
             <View style={styles.taskBoxContainer}>
                 {renderFinalTaskBoxes()}
             </View>
-            <TouchableOpacity onPress={() => DBManager.logout(navigation)}>
+            <TouchableOpacity onPress={signoutHandler}>
               <Text style={styles.signout}>Sign Out</Text>
             </TouchableOpacity>
 		</View>
