@@ -9,7 +9,8 @@ import {
 	ActivityIndicator,
 	TextInput,
 	TouchableHighlight,
-  PermissionsAndroid
+	ToastAndroid,
+    PermissionsAndroid
 
 } from 'react-native';
 
@@ -43,16 +44,18 @@ export default function SampleCollector({ navigation }) {
 
 
     const [phValue, setPhValue] = useState(undefined)
-	  const [temperatureValue, setTemparatureValue] = useState(undefined)
+	const [temperatureValue, setTemparatureValue] = useState(undefined)
   	const [inflowValue, setInflowValue] = useState(undefined)
 
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 	const [showErrPopup, setShowErrPopup] = useState(false);
 	const [serverMessage, setServerMessage] = useState('');
 
+	const [reactiveQR, setReactiveQR] = useState(true);
+	const [scanner, setScanner] = useState(null);
 
     const handleSampleDataSubmit = (pointId) => {
-      console.log(`${Constants.debugDesc.text} handle additional data with point id=${pointId}`);
+    console.log(`${Constants.debugDesc.text} handle additional data with point id=${pointId}`);
   
       if(sampleDataOverlayVisible) {
         toggleOverlay('sampleDataOverlay')
@@ -67,6 +70,7 @@ export default function SampleCollector({ navigation }) {
           'inflow': inflowValue
         }
       }
+	  
       console.log(`${Constants.debugDesc.text} after adding additional = ${additionalData} qrcode=${qrData}`);
       
       var s = new SampleTracking()
@@ -126,11 +130,19 @@ export default function SampleCollector({ navigation }) {
       console.log(`capture data=${e.data}`);
       setScanned(true)
 	  setQrData(e.data)
+
 	  if (Util.isValidQRScan(e.data)) {
+		setReactiveQR(false)
 		toggleOverlay('sampleDataOverlay')
 	  } else {
-		setServerMessage(Constants.alertMessages.invalidQRCode)
-		setShowErrPopup(true);
+		// setServerMessage(Constants.alertMessages.invalidQRCode)
+		// setShowErrPopup(true);
+		ToastAndroid.showWithGravity(Constants.alertMessages.invalidQRCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+		setTimeout(function(){
+			scanner.reactivate();
+		}, 3000);
+		setScanned(false);
+		setReactiveQR(false);
 	  }
 	  
    }
@@ -192,7 +204,7 @@ export default function SampleCollector({ navigation }) {
     return(
         <View style= {{flex: 1, backgroundColor: 'black'}}>
             <Text>Sample collector page {latitude}</Text>
-            { locationAccessed == true ? <QRCodeScanner onRead={scanned ? undefined : onSuccess} style={{ height: "100%", width: Dimensions.get('window').width}}/>: undefined}
+            { locationAccessed == true ? <QRCodeScanner reactivate = {reactiveQR} onRead={scanned ? undefined : onSuccess} style={{ height: "100%", width: Dimensions.get('window').width}} ref={(node) => { setScanner(node) }}/>: undefined}
             { locationAccessed == true? <BarcodeMask width={300} height={300} showAnimatedLine={false} outerMaskOpacity={0.9}/>: undefined }
 
           <Overlay isVisible={location === undefined}>
@@ -206,6 +218,7 @@ export default function SampleCollector({ navigation }) {
 					onBackdropPress={() => {toggleOverlay('sampleDataOverlay'); setScanned(false)}}
 		       >
 					<Text style={styles.sampleDataHeading}>Additional Data</Text>
+					<Text style={{color: 'green',fontWeight:'500', alignSelf: 'center'}}>Scanned QR Code: {qrData}</Text>
 					<TextInput
 						style={styles.sampleDataInput}
 						placeholder='pH Value'

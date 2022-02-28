@@ -1,13 +1,15 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { 
-	StyleSheet, 
-	View, 
+import {
+	StyleSheet,
+	View,
 	Text,
 	StatusBar,
-	Image
+	Image,
+	TouchableOpacity
 } from "react-native";
-import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
+import DatePicker from 'react-native-date-picker';
 
 import WinLogoColor from '../../assets/win_logo_color.png';
 import Authentication from '../../controllers/authentication';
@@ -22,14 +24,16 @@ import Util from "../Util";
 export default function SampleList({ navigation }) {
 
 	const [sampleList, setSampleList] = useState([])
+	const [date, setDate] = useState(new Date())
+	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
 		var sampleTracking = new SampleTracking()
 		sampleTracking.getSamplesList(Util.getCurrentDate(), navigation)
 			.then(setSampleList)
 		console.log(`calculated date = ${Util.getCurrentDate()}`)
-	//	sampleTracking.getSamplesList('2022-2-8', navigation)
-	//		.then(setSampleList)
+		//	sampleTracking.getSamplesList('2022-2-8', navigation)
+		//		.then(setSampleList)
 	}, [])
 
 	const detailedStatusDefault = [
@@ -41,12 +45,12 @@ export default function SampleList({ navigation }) {
 			"message": "Sample has not reached the lab"
 		}
 	]
-  
+
 	const renderHeader = (item) => {
 		var l = item.statusLog.length
 		var date = new Date(item.statusLog[l - 1].timestamp)
 		var statusRes = getStatusResponse(item.status)
-		return(
+		return (
 			<View
 				style={styles.accordionHeader}
 			>
@@ -65,7 +69,7 @@ export default function SampleList({ navigation }) {
 					</Text>
 				</View>
 				<View
-					style={{backgroundColor: statusRes.color, ...styles.accordionHeaderRightContainer}}
+					style={{ backgroundColor: statusRes.color, ...styles.accordionHeaderRightContainer }}
 				>
 					<Image
 						source={statusRes.icon}
@@ -73,27 +77,27 @@ export default function SampleList({ navigation }) {
 					/>
 					<Text style={styles.accordionHeaderStatusText}>{statusRes.short}</Text>
 				</View>
-				
+
 			</View>
 		);
 	}
 
 	const getStatusResponse = (status) => {
-		if(status === Constants.status.sampleCollected) {
+		if (status === Constants.status.sampleCollected) {
 			return {
 				long: 'Sample collected',
 				short: 'Sample\nCollected',
 				icon: SampleCollectionIcon,
 				color: '#0020b8'
 			}
-		} else if(status === Constants.status.sampleInTransit) {
+		} else if (status === Constants.status.sampleInTransit) {
 			return {
 				long: 'Sample in transit',
 				short: 'Sample\nOnRoute',
 				icon: SampleInTransitIcon,
 				color: '#584174'
 			}
-		} else if(status === Constants.status.sampleReceivedInLab) {
+		} else if (status === Constants.status.sampleReceivedInLab) {
 			return {
 				long: 'Sample in lab',
 				short: 'Sample\nReceived',
@@ -116,21 +120,21 @@ export default function SampleList({ navigation }) {
 			}
 		} */
 	}
-	
+
 	const renderDetailedStatus = (statusList) => {
 		var res = []
 		detailedStatusDefault.forEach((statusItem, i) => {
 			var response = statusItem.message
 			var color = Constants.colors.gray
 			var date = undefined
-			if(i < statusList.length) {
+			if (i < statusList.length) {
 				var d = new Date(statusList[i].timestamp)
 				response = getStatusResponse(statusList[i].status).long
 				date = <Text style={styles.detailedStatusDate}>{d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() + ' ' + d.getHours() % 12 + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')}</Text>
 				color = '#3D7B3D'
 			}
 			res.push(
-				<View 
+				<View
 					key={i}
 					style={{
 						borderLeftWidth: 10,
@@ -148,8 +152,8 @@ export default function SampleList({ navigation }) {
 
 		return res
 	}
-  
-  	const renderBody = (item) => {
+
+	const renderBody = (item) => {
 		return (
 			<View style={styles.accordionBody}>
 				{
@@ -159,7 +163,7 @@ export default function SampleList({ navigation }) {
 						["Location ID", item.sampleCollectionLocation.pointId],
 						["Type", item.sampleCollectionLocation.type]
 					].map((v, i) => {
-						if(v) {
+						if (v) {
 							return (
 								<View key={i} style={styles.accordionBodyRow}>
 									<Text style={styles.accordionBodyTableKey}>{v[0]}</Text>
@@ -174,14 +178,33 @@ export default function SampleList({ navigation }) {
 				</View>
 			</View>
 		);
-  }
+	}
 
-  return (
+
+
+	return (
 		<View
 			style={styles.container}
 		>
 			{console.log(`${Constants.debugDesc.text} comes under sampling list`)}
 			<Text style={styles.pageHeading}>Sampling Status</Text>
+			{/* <TouchableOpacity onPress={() => setOpen(true)}>
+				<Text>Search</Text>
+			</TouchableOpacity> */}
+
+			{/* <DatePicker
+				modal
+				open={open}
+				date={date}
+				onConfirm={(date) => {
+					setOpen(false)
+					setDate(date)
+				}}
+				onCancel={() => {
+					setOpen(false)
+				}}
+			/> */}
+
 			<View style={styles.accordionContainer}>
 				<AccordionList
 					style={styles.accordionList}
@@ -192,7 +215,7 @@ export default function SampleList({ navigation }) {
 				/>
 			</View>
 		</View>
-  );
+	);
 }
 
 const styles = StyleSheet.create({
@@ -297,4 +320,4 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		fontFamily: "Quicksand",
 	}
-  });
+});

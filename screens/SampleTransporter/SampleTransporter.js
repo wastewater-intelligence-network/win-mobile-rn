@@ -9,7 +9,8 @@ import {
 	ActivityIndicator,
 	TextInput,
 	TouchableHighlight,
-	PermissionsAndroid
+	PermissionsAndroid,
+	ToastAndroid
 } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
@@ -145,9 +146,10 @@ export default function SampleCollector({ route, navigation }) {
 	const configureScan = () => {
 		setScanned(false);
 		setReactiveQR(false)
-		scanner.reactivate();
+		setTimeout(function(){
+			scanner.reactivate();
+		}, 3000);
 	}
-
 
       onSuccess = e => {
         console.log(`capture data=${e.data}`);
@@ -163,8 +165,10 @@ export default function SampleCollector({ route, navigation }) {
 				updateStatusToAccepted(sampleTracking, e.data)
 			}
 		} else {
-			setServerMessage(Constants.alertMessages.invalidQRCode)
-            setShowErrPopup(true);
+			// setServerMessage(Constants.alertMessages.invalidQRCode)
+            // setShowErrPopup(true);
+			ToastAndroid.showWithGravity(Constants.alertMessages.invalidQRCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+			configureScan();
 		}
 
      }
