@@ -5,7 +5,8 @@ var Constants = {
     alertMessages: {
         invalidSession: "Invalid session, Please try to login",
         error: "Error!!",
-        invalidQRCode: "Invalid QR code scanned"
+        invalidQRCode: "Invalid QR code scanned",
+        nodataFound: "No data found"
     },
     colors: {
         primary: "#756BDE",

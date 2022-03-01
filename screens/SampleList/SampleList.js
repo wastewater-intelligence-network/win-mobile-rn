@@ -6,10 +6,13 @@ import {
 	Text,
 	StatusBar,
 	Image,
-	TouchableOpacity
+	TouchableOpacity,
+	Dimensions
 } from "react-native";
+
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 import DatePicker from 'react-native-date-picker';
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import WinLogoColor from '../../assets/win_logo_color.png';
 import Authentication from '../../controllers/authentication';
@@ -29,9 +32,8 @@ export default function SampleList({ navigation }) {
 
 	useEffect(() => {
 		var sampleTracking = new SampleTracking()
-		sampleTracking.getSamplesList(Util.getCurrentDate(), navigation)
+		sampleTracking.getSamplesList(Util.getFilteredDate(), navigation)
 			.then(setSampleList)
-		console.log(`calculated date = ${Util.getCurrentDate()}`)
 		//	sampleTracking.getSamplesList('2022-2-8', navigation)
 		//		.then(setSampleList)
 	}, [])
@@ -180,31 +182,37 @@ export default function SampleList({ navigation }) {
 		);
 	}
 
-
+	const selectedDate = (passedDate) => {
+		var sampleTracking = new SampleTracking()
+		sampleTracking.getSamplesList(Util.getFilteredDate(passedDate), navigation)
+			.then(setSampleList)
+	}
 
 	return (
 		<View
 			style={styles.container}
 		>
-			{console.log(`${Constants.debugDesc.text} comes under sampling list`)}
-			<Text style={styles.pageHeading}>Sampling Status</Text>
-			{/* <TouchableOpacity onPress={() => setOpen(true)}>
-				<Text>Search</Text>
-			</TouchableOpacity> */}
 
-			{/* <DatePicker
+			<Text style={styles.pageHeading}>Sampling Status</Text>			
+			<TouchableOpacity onPress={() => setOpen(true)}>
+				<Text style={styles.dateStyle}>{Util.getDate(date)}</Text>
+			</TouchableOpacity>
+
+			<DatePicker
 				modal
+				mode = "date"
 				open={open}
 				date={date}
 				onConfirm={(date) => {
 					setOpen(false)
 					setDate(date)
+					selectedDate(date);
 				}}
 				onCancel={() => {
 					setOpen(false)
 				}}
-			/> */}
-
+			/>
+            {sampleList.length > 0 ?
 			<View style={styles.accordionContainer}>
 				<AccordionList
 					style={styles.accordionList}
@@ -214,6 +222,11 @@ export default function SampleList({ navigation }) {
 					keyExtractor={item => item.sampleId}
 				/>
 			</View>
+			:
+			<View style={{justifyContent: 'center', height: Dimensions.get('window').height - 120}}>
+					<Text>{Constants.alertMessages.nodataFound}</Text>
+			 </View>
+			}
 		</View>
 	);
 }
@@ -319,5 +332,11 @@ const styles = StyleSheet.create({
 	detailedStatusDate: {
 		fontSize: 13,
 		fontFamily: "Quicksand",
+	},
+	dateStyle: {
+		marginTop: -5,
+		fontWeight: '500',
+		fontFamily: "Quicksand",
+		color: "#756BDE"
 	}
 });
