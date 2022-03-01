@@ -1,4 +1,5 @@
 import Fetch from './fetch';
+import Constants from '../screens/constants';
 
 export default class SampleTracking {
     sampleCollected = (location, containerId, pointId, additionalData, navigation) => {
@@ -70,6 +71,8 @@ export default class SampleTracking {
                 .then(res => res.json())
                 .then(res => {
                     console.log(`response of sample list =${res}`)
+                    console.log(`${Constants.debugDesc.text} josn of samplelist is =${JSON.stringify(res)}`)
+
                     resolve(res)
                 })
                 .catch(reject)

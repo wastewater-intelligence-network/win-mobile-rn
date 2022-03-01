@@ -30,13 +30,23 @@ export default function SampleList({ navigation }) {
 	const [date, setDate] = useState(new Date())
 	const [open, setOpen] = useState(false)
 
+	
+
 	useEffect(() => {
 		var sampleTracking = new SampleTracking()
 		sampleTracking.getSamplesList(Util.getFilteredDate(), navigation)
 			.then(setSampleList)
+
+		sampleList.map((obj) => {
+			console.log(`coordinate =++++++++++++++++++${obj.sampleCollectionLocation.location.coordinates}`)
+		})
 		//	sampleTracking.getSamplesList('2022-2-8', navigation)
 		//		.then(setSampleList)
 	}, [])
+
+	const filterAllCoodrdinate = () => {
+
+	}
 
 	const detailedStatusDefault = [
 		{
