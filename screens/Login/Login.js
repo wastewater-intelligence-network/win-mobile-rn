@@ -7,6 +7,7 @@ import {
 	Image,
 	TouchableHighlight,
 	ToastAndroid,
+	ActivityIndicator
 } from 'react-native';
 
 import WinLogoColor from '../../assets/win_logo_color.png';
@@ -18,6 +19,7 @@ import DBManager from '../DBManager';
 export default function Login({navigation}) {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
+	const [loading, setLoading] = useState(false);
 
 	useEffect (() => {
 		console.log('useeffect login called');
@@ -67,6 +69,7 @@ export default function Login({navigation}) {
 	const handleLogin = () => {
 		var auth = new Authentication()
 		//reset token and all 
+		setLoading(true);
 		auth.login(username, password)
 			.then((res) => {
 				if(res) {
@@ -75,8 +78,10 @@ export default function Login({navigation}) {
 					ToastAndroid.showWithGravity("Login Successful", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
                    // navigation.navigate('Home', res.roles)
 					navigation.replace('Home', res.roles)
+					setLoading(false);
 				} else {
 					ToastAndroid.show("Could not login. Please check your username and password", ToastAndroid.LONG)
+					setLoading(false);
 				}
 			})
 	}
@@ -121,6 +126,7 @@ export default function Login({navigation}) {
                 autoCapitalize='none'
 				secureTextEntry={true}
 				/>
+			{ loading === false ?
 			<TouchableHighlight 
 				style={styles.button}
 				underlayColor={Constants.colors.primaryDark}
@@ -128,7 +134,10 @@ export default function Login({navigation}) {
 			>
 				<Text style={styles.buttonText}>LOGIN</Text>
 			</TouchableHighlight>
+			:
+			<ActivityIndicator size='small'/>
 
+			}
 		</View>
 			
 	);

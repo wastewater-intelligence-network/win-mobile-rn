@@ -7,7 +7,8 @@ export default function WinCustomAlert({
   displayMsg,
   visibility,
   dismissAlert,
-  onPressHandler
+  onPressHandler,
+  calculatedHeight = 200
 }) {
   return (
     <View>
@@ -27,7 +28,7 @@ export default function WinCustomAlert({
             style={{
               alignItems: 'center',
               backgroundColor: 'white',
-              height: 200,
+              height: calculatedHeight,
               width: '90%',
               borderWidth: 1,
               borderColor: '#fff',

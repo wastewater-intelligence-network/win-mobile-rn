@@ -7,7 +7,8 @@ import {
 	StatusBar,
 	Image,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	FlatList
 } from "react-native";
 
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
@@ -23,30 +24,24 @@ import SampleCollectionIcon from '../../assets/sample_collection.png';
 import SampleInTransitIcon from '../../assets/transition.png';
 import SampleInLabIcon from '../../assets/sample_accepted.png';
 import Util from "../Util";
+import Spinner from "../Spinner";
 
 export default function SampleList({ navigation }) {
 
 	const [sampleList, setSampleList] = useState([])
 	const [date, setDate] = useState(new Date())
 	const [open, setOpen] = useState(false)
-
-	
+	const [dataLoaded, setDataLoaded] = useState(false);
 
 	useEffect(() => {
 		var sampleTracking = new SampleTracking()
+		setDate(Util.getCurrentDate)
 		sampleTracking.getSamplesList(Util.getFilteredDate(), navigation)
-			.then(setSampleList)
-
-		sampleList.map((obj) => {
-			console.log(`coordinate =++++++++++++++++++${obj.sampleCollectionLocation.location.coordinates}`)
-		})
-		//	sampleTracking.getSamplesList('2022-2-8', navigation)
-		//		.then(setSampleList)
+			.then(data => {
+				setSampleList(data)
+				setDataLoaded(true)
+			})
 	}, [])
-
-	const filterAllCoodrdinate = () => {
-
-	}
 
 	const detailedStatusDefault = [
 		{
@@ -60,7 +55,8 @@ export default function SampleList({ navigation }) {
 
 	const renderHeader = (item) => {
 		var l = item.statusLog.length
-		var date = new Date(item.statusLog[l - 1].timestamp)
+		var date = new Date(item.statusLog[0].timestamp)
+
 		var statusRes = getStatusResponse(item.status)
 		return (
 			<View
@@ -74,10 +70,8 @@ export default function SampleList({ navigation }) {
 					>
 						{item.sampleCollectionLocation.name}
 					</Text>
-					<Text
-						style={styles.accordionHeaderTime}
-					>
-						{date.getHours() % 12 + ':' + date.getMinutes() + ' ' + (date.getHours() < 12 ? 'AM' : 'PM')}
+					<Text style={styles.accordionHeaderTime}>
+						 {Util.timeFormatter(date)} 
 					</Text>
 				</View>
 				<View
@@ -194,20 +188,28 @@ export default function SampleList({ navigation }) {
 
 	const selectedDate = (passedDate) => {
 		var sampleTracking = new SampleTracking()
+		setDataLoaded(false);
 		sampleTracking.getSamplesList(Util.getFilteredDate(passedDate), navigation)
-			.then(setSampleList)
+			.then(data => {
+				setSampleList(data)
+				setDataLoaded(true)
+			})
+	}
+
+	const renderConfiguredList = () => {
+
 	}
 
 	return (
 		<View
 			style={styles.container}
 		>
-
 			<Text style={styles.pageHeading}>Sampling Status</Text>			
+			<Text style={styles.dateStyle}>{Util.getDate(date)}</Text>
 			<TouchableOpacity onPress={() => setOpen(true)}>
-				<Text style={styles.dateStyle}>{Util.getDate(date)}</Text>
+				<Text style={styles.chooseDateStyle}>Select Date</Text>
 			</TouchableOpacity>
-
+            
 			<DatePicker
 				modal
 				mode = "date"
@@ -222,20 +224,29 @@ export default function SampleList({ navigation }) {
 					setOpen(false)
 				}}
 			/>
-            {sampleList.length > 0 ?
-			<View style={styles.accordionContainer}>
-				<AccordionList
-					style={styles.accordionList}
-					list={sampleList}
-					header={renderHeader}
-					body={renderBody}
-					keyExtractor={item => item.sampleId}
-				/>
+            { dataLoaded === true  ?
+			<View style={styles.container}> 
+				{sampleList.length > 0 ?
+					<View style={styles.accordionContainer}>
+						<AccordionList
+							style={styles.accordionList}
+							list={sampleList}
+							header={renderHeader}
+							body={renderBody}
+							keyExtractor={item => item.sampleId}
+						/>
+					</View> 
+				:
+					<View style={styles.messageContainerStyle}>
+						<Text>No data found</Text>
+					</View>
+				}			
 			</View>
-			:
-			<View style={{justifyContent: 'center', height: Dimensions.get('window').height - 120}}>
-					<Text>{Constants.alertMessages.nodataFound}</Text>
+			: 
+			<View style={styles.messageContainerStyle}>
+					<Spinner/>
 			 </View>
+			
 			}
 		</View>
 	);
@@ -348,5 +359,16 @@ const styles = StyleSheet.create({
 		fontWeight: '500',
 		fontFamily: "Quicksand",
 		color: "#756BDE"
+	},
+	chooseDateStyle: {
+		marginTop: 0,
+		fontWeight: '500',
+		fontFamily: "Quicksand",
+		color: "#756BDE"
+	},
+
+	messageContainerStyle : {
+		justifyContent: 'center',
+	    height: Dimensions.get('window').height - 120
 	}
 });

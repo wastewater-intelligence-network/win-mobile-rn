@@ -8,7 +8,7 @@ export default class Util {
             var date = dateObj.getDate();
             var month = dateObj.getMonth() + 1;
             var year = dateObj.getFullYear();
-            return date + '-' + month + '-' + year ;//format: dd-mm-yyyy;
+            return date + '-' + month + '-' + year ;
     }
 
     static getFilteredDate(selectedDate = new Date()) {
@@ -20,8 +20,15 @@ export default class Util {
             return year + '-' + month + '-' + date;//format: dd-mm-yyyy;       
     }
 
+    static timeFormatter(date) {
+        let hour = date.getHours() % 12;
+        let minutes = date.getMinutes() % 12 ;
+        return (hour < 10 ? '0' + hour : hour) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ( hour < 12 ? 'AM' : 'PM')
+    }
 
-
+    static getCurrentDate() {
+            return new Date()
+    }
 
     static getCurrentTimeStamp() {
         return Math.floor(Date.now() / 1000)
