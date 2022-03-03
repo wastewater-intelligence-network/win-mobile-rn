@@ -11,6 +11,13 @@ export default class Util {
             return date + '-' + month + '-' + year ;
     }
 
+    static getFormatedDate(dateObj) {
+        var date = dateObj.getDate();
+        var month = dateObj.getMonth() + 1;
+        var year = dateObj.getFullYear();
+        return (date < 10 ? '0' + date:date) + '-' + (month < 10 ? '0' + month: month) + '-' + year ;
+    }
+
     static getFilteredDate(selectedDate = new Date()) {
             console.log('Here is coming');
             var dateObj = selectedDate;
@@ -36,6 +43,18 @@ export default class Util {
 
     static isValidQRScan(qrData) {
         return ((qrData.length === Constants.scanCharater.length) ? true:false)
+    }
+
+    static showDateAndTime(statusList, index) {
+
+        var d = new Date(statusList[index].timestamp)
+        var date = d.getDate();
+        var month = d.getMonth();
+        var hr = d.getHours() % 12;
+        var min = d.getMinutes();
+        var ss = d.getSeconds();
+        var date = (date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (hr < 10 ?( '0' + hr): hr) + ':' + (min < 10 ? '0' + min: min) + ':' + (ss < 10 ? '0' + ss: ss) + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')
+        return date;
     }
 
 }

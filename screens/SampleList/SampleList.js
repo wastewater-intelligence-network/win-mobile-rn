@@ -136,7 +136,9 @@ export default function SampleList({ navigation }) {
 			if (i < statusList.length) {
 				var d = new Date(statusList[i].timestamp)
 				response = getStatusResponse(statusList[i].status).long
-				date = <Text style={styles.detailedStatusDate}>{d.getDate() + '/' + d.getMonth() + '/' + d.getFullYear() + ' ' + d.getHours() % 12 + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')}</Text>
+				var date = d.getDate();
+				var month = d.getMonth();
+				date = <Text style={styles.detailedStatusDate}>{(date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (d.getHours() % 12 < 10 ?( '0' + d.getHours() % 12): d.getHours() % 12) + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes(): d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds(): d.getSeconds()) + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')}</Text>
 				color = '#3D7B3D'
 			}
 			res.push(
@@ -196,18 +198,15 @@ export default function SampleList({ navigation }) {
 			})
 	}
 
-	const renderConfiguredList = () => {
-
-	}
-
+	
 	return (
 		<View
 			style={styles.container}
 		>
 			<Text style={styles.pageHeading}>Sampling Status</Text>			
-			<Text style={styles.dateStyle}>{Util.getDate(date)}</Text>
+			<Text style={styles.dateStyle}>{Util.getFormatedDate(date)}</Text>
 			<TouchableOpacity onPress={() => setOpen(true)}>
-				<Text style={styles.chooseDateStyle}>Select Date</Text>
+				<Text style={styles.chooseDateStyle}>---Select Date---</Text>
 			</TouchableOpacity>
             
 			<DatePicker

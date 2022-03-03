@@ -32,8 +32,7 @@ export default function SampleCollector({ route, navigation }) {
 	const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 	const [showErrPopup, setShowErrPopup] = useState(false);
 	const [serverMessage, setServerMessage] = useState('');
-
-	//const scanner = useRef(0);
+	const [labJsonResponse, setLabJsonResponse ] = useState({});	
 
     const requestCameraPermission = async () => {
         try {
@@ -108,13 +107,9 @@ export default function SampleCollector({ route, navigation }) {
 					setServerMessage(message)
             		setShowSuccessPopup(true);
 					console.log(`${Constants.debugDesc.text} josn of samplelist sampleInTransit is =${JSON.stringify(res)}`)
-
+                    
 					
 				} else {
-					// alertUser(
-					// 	"Issue with adding the sample",
-					// 	res.message
-					// )
 					setServerMessage(res.message)
             		setShowErrPopup(true);
 				}
@@ -131,10 +126,9 @@ export default function SampleCollector({ route, navigation }) {
 					// 	"Sample in container ID " + containerId + " received in the lab"
 					// )
 					let message = "Sample in container ID " + containerId + " received in the lab"
+					setLabJsonResponse(res);
 					setServerMessage(message)
             		setShowSuccessPopup(true);
-					console.log(`${Constants.debugDesc.text} josn of samplelist sampleAcceptedInLab is =${JSON.stringify(res)}`)
-
 					
 				} else {
 					// alertUser(
@@ -201,7 +195,8 @@ export default function SampleCollector({ route, navigation }) {
 						visibility={showSuccessPopup}
 						dismissAlert={setShowSuccessPopup}
 						onPressHandler = {() => configureScan()}
-						calculatedHeight = {400}
+						calculatedHeight = {route.name === Constants.screenName.SampleAcceptance ? 350:200}
+						labResponse = {labJsonResponse}
 					/>
 					<WinCustomAlert
 						displayMode={'failed'}
@@ -209,8 +204,6 @@ export default function SampleCollector({ route, navigation }) {
 						visibility={showErrPopup}
 						dismissAlert={setShowErrPopup}
 						onPressHandler = {() => configureScan() }
-						calculatedHeight = {400}
-
 					/>
 						   
         </View>
