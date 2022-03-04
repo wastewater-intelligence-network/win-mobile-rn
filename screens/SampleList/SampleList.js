@@ -157,7 +157,6 @@ export default function SampleList({ navigation }) {
 				</View>
 			)
 		})
-
 		return res
 	}
 
@@ -206,7 +205,7 @@ export default function SampleList({ navigation }) {
 			<Text style={styles.pageHeading}>Sampling Status</Text>			
 			<Text style={styles.dateStyle}>{Util.getFormatedDate(date)}</Text>
 			<TouchableOpacity onPress={() => setOpen(true)}>
-				<Text style={styles.chooseDateStyle}>---Select Date---</Text>
+				<Text style={styles.chooseDateStyle}>--- Select Date ---</Text>
 			</TouchableOpacity>
             
 			<DatePicker
@@ -360,8 +359,8 @@ const styles = StyleSheet.create({
 		color: "#756BDE"
 	},
 	chooseDateStyle: {
-		marginTop: 0,
-		fontWeight: '500',
+		marginTop: 2,
+		fontWeight: '700',
 		fontFamily: "Quicksand",
 		color: "#756BDE"
 	},
