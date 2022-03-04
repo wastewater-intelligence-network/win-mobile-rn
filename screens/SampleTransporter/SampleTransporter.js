@@ -21,6 +21,7 @@ import Constants from '../constants';
 import SampleTracking from '../../controllers/sample_tracking';
 import WinCustomAlert from '../WinCustomAlert';
 import Util from '../Util';
+import Spinner from '../Spinner';
 
 
 export default function SampleCollector({ route, navigation }) {
@@ -33,6 +34,7 @@ export default function SampleCollector({ route, navigation }) {
 	const [showErrPopup, setShowErrPopup] = useState(false);
 	const [serverMessage, setServerMessage] = useState('');
 	const [labJsonResponse, setLabJsonResponse ] = useState({});	
+	const [loading, setLoading] = useState(false);
 
     const requestCameraPermission = async () => {
         try {
@@ -96,9 +98,10 @@ export default function SampleCollector({ route, navigation }) {
 	}
 
 	const updateStatusToInTransit = (sampleTracking, containerId) => {
-
+		setLoading(true);
 		sampleTracking.sampleInTransit(containerId, navigation)
 			.then((res) => {
+				setLoading(false);
 				if(res.status === 200) {
 					// alertUser(
 					// 	"In Transit",
@@ -118,9 +121,10 @@ export default function SampleCollector({ route, navigation }) {
 	}
 
 	const updateStatusToAccepted = (sampleTracking, containerId) => {
-		
+		setLoading(true);
 		sampleTracking.sampleAcceptedInLab(containerId, navigation)
 			.then((res) => {
+				setLoading(false);
 				if(res.status === 200) {
 
 					// alertUser(
@@ -174,11 +178,12 @@ export default function SampleCollector({ route, navigation }) {
 		}
      }
 
+
     // Return the View
 	return (
         <View style={styles.container}>  
+
 		          <View style = {{flex:1 , backgroundColor: 'black'}}>  
-				  {console.log(`rerender with reactive qr=${reactiveQR}`)}      
 						<QRCodeScanner
 							reactivate = {reactiveQR}
 							onRead={scanned ? undefined : onSuccess}
@@ -188,8 +193,9 @@ export default function SampleCollector({ route, navigation }) {
 						<BarcodeMask
 							width={300} height={300} showAnimatedLine={false} outerMaskOpacity={0.9}
 						/>
-
+						{loading === true ? <ActivityIndicator size='large' /> : null}			   
 					</View> 
+
 
 					<WinCustomAlert
 						displayMode={'success'}
@@ -207,7 +213,8 @@ export default function SampleCollector({ route, navigation }) {
 						dismissAlert={setShowErrPopup}
 						onPressHandler = {() => configureScan() }
 					/>
-						   
+
+
         </View>
 );
 }
