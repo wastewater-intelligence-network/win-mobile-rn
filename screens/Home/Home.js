@@ -33,6 +33,7 @@ export default function Home({navigation, route}) {
         collectorObj
     ]};
 
+
     useEffect(() => {
         console.log('use effect called');
         setFinalRoles(filteredCollectionList);

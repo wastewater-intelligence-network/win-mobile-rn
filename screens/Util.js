@@ -53,7 +53,7 @@ export default class Util {
         var hr = d.getHours() % 12;
         var min = d.getMinutes();
         var ss = d.getSeconds();
-        var date = (date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (hr < 10 ?( '0' + hr): hr) + ':' + (min < 10 ? '0' + min: min) + ':' + (ss < 10 ? '0' + ss: ss) + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')
+        var date = (date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (hr < 10 ?( '0' + hr): hr) + ':' + (min < 10 ? '0' + min: min)  + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')
         return date;
     }
 

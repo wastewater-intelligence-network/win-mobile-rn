@@ -96,6 +96,7 @@ export default function SampleCollector({ route, navigation }) {
 	}
 
 	const updateStatusToInTransit = (sampleTracking, containerId) => {
+
 		sampleTracking.sampleInTransit(containerId, navigation)
 			.then((res) => {
 				if(res.status === 200) {
@@ -117,6 +118,7 @@ export default function SampleCollector({ route, navigation }) {
 	}
 
 	const updateStatusToAccepted = (sampleTracking, containerId) => {
+		
 		sampleTracking.sampleAcceptedInLab(containerId, navigation)
 			.then((res) => {
 				if(res.status === 200) {
@@ -152,16 +154,17 @@ export default function SampleCollector({ route, navigation }) {
 
       onSuccess = e => {
         console.log(`capture data=${e.data}`);
-        setScanned(true)
-		setQrData(e.data)
-		setReactiveQR(false)
+        setScanned(true);
+		let qrCode = (e.data).toUpperCase();
+		setQrData(qrCode);
+		setReactiveQR(false);
 
-        if (Util.isValidQRScan(e.data)) {
+        if (Util.isValidQRScan(qrCode)) {
 			let sampleTracking = new SampleTracking()
 			if(route.name === Constants.screenName.SampleTransporter) {
-				updateStatusToInTransit(sampleTracking, e.data)
+				updateStatusToInTransit(sampleTracking, qrCode)
 			} else if(route.name === Constants.screenName.SampleAcceptance) {
-				updateStatusToAccepted(sampleTracking, e.data)
+				updateStatusToAccepted(sampleTracking, qrCode)
 			}
 		} else {
 			// setServerMessage(Constants.alertMessages.invalidQRCode)
@@ -169,7 +172,6 @@ export default function SampleCollector({ route, navigation }) {
 			ToastAndroid.showWithGravity(Constants.alertMessages.invalidQRCode, ToastAndroid.SHORT, ToastAndroid.BOTTOM)
 			configureScan();
 		}
-
      }
 
     // Return the View
@@ -195,7 +197,7 @@ export default function SampleCollector({ route, navigation }) {
 						visibility={showSuccessPopup}
 						dismissAlert={setShowSuccessPopup}
 						onPressHandler = {() => configureScan()}
-						calculatedHeight = {route.name === Constants.screenName.SampleAcceptance ? 350:200}
+						calculatedHeight = {route.name === Constants.screenName.SampleAcceptance ? 360:200}
 						labResponse = {labJsonResponse}
 					/>
 					<WinCustomAlert

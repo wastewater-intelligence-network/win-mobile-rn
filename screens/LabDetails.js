@@ -35,7 +35,7 @@ export default function LabDetails({labResponse}) {
                 <Text style={styles.textStyle}>{Util.showDateAndTime(labResponse.sample.statusLog, 0)}</Text>
             </View>
             <View style={styles.sectionStyle}>
-                <Text style={styles.textStyle}>Sample Transmitted:</Text>
+                <Text style={styles.textStyle}>Sample Transported:</Text>
                 <Text style={styles.textStyle}>{Util.showDateAndTime(labResponse.sample.statusLog, 1)}</Text>
             </View>
         </View>
@@ -47,6 +47,7 @@ const styles = {
         flexDirection: 'row',
         justifyContent:'space-between'
     },
+
     textStyle: {
         fontWeight: '500'
     }
