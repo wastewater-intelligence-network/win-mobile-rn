@@ -1,5 +1,5 @@
 {
-  "name": "WinMobileApp",
+  "name": "Wastewater Intelligence Network",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,18 +15,24 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "accordion-collapse-react-native": "^1.1.0",
+    "appcenter": "4.4.3",
+    "appcenter-analytics": "4.4.3",
+    "appcenter-crashes": "4.4.3",
     "react": "17.0.2",
     "react-native": "0.67.2",
     "react-native-barcode-mask": "^1.2.4",
     "react-native-base64": "^0.2.1",
     "react-native-camera": "^4.2.1",
+    "react-native-date-picker": "^4.2.0",
     "react-native-elements": "^3.4.2",
+    "react-native-maps": "0.30.1",
     "react-native-permissions": "^3.2.0",
     "react-native-qrcode-scanner": "^1.5.5",
     "react-native-safe-area-context": "^3.4.0",
     "react-native-screens": "^3.11.1",
     "react-native-splash-screen": "^3.3.0",
-    "react-native-vector-icons": "^9.1.0"
+    "react-native-vector-icons": "^9.1.0",
+    "realm": "^10.13.0"
   },
   "devDependencies": {
     "@babel/core": "7.17.4",

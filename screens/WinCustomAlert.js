@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {Modal, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import LabDetails from './LabDetails';
 
 export default function WinCustomAlert({
   displayMode,
   displayMsg,
   visibility,
   dismissAlert,
-  onPressHandler
+  onPressHandler,
+  calculatedHeight = 200,
+  labResponse = {}
 }) {
   return (
     <View>
@@ -27,7 +30,7 @@ export default function WinCustomAlert({
             style={{
               alignItems: 'center',
               backgroundColor: 'white',
-              height: 200,
+              height: calculatedHeight,
               width: '90%',
               borderWidth: 1,
               borderColor: '#fff',
@@ -47,6 +50,14 @@ export default function WinCustomAlert({
                 </>
               )}
               <Text style={{fontSize: 20, marginTop: 8}}>{displayMsg}</Text>
+                { labResponse.message === undefined ?
+                <Text></Text>
+                  :
+                  <View>
+                    <LabDetails labResponse={labResponse}/>
+                  </View>
+                }
+
             </View>
 
             <TouchableOpacity

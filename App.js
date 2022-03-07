@@ -9,6 +9,7 @@ import Home from './screens/Home/Home';
 import SampleList from './screens/SampleList/SampleList';
 import SampleCollector from './screens/SampleCollector/SampleCollector';
 import SampleTransporter from './screens/SampleTransporter/SampleTransporter';
+import Util from './screens/Util';
 
 
 const Stack = createNativeStackNavigator();

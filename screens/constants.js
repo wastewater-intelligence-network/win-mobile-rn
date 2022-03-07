@@ -4,7 +4,9 @@ var Constants = {
     },
     alertMessages: {
         invalidSession: "Invalid session, Please try to login",
-        error: "Error!!"
+        error: "Error!!",
+        invalidQRCode: "Invalid QR code scanned",
+        nodataFound: "No data found"
     },
     colors: {
         primary: "#756BDE",
@@ -16,7 +18,8 @@ var Constants = {
         SampleTransporter: 'SampleTransporter',
         SampleAcceptance: 'SampleAcceptance',
         SamplesList: 'SamplesList',
-        Login: 'Login'
+        Login: 'Login',
+        Home: 'Home'
     },
     status: {
         sampleCollected: 'sample_collected',
@@ -41,6 +44,14 @@ var Constants = {
     storageKey: {
         token: "token",
         timestamp: "timestamp"
+    },
+
+    schemaName: {
+        UserDetails: "UserDetails"
+    },
+
+    scanCharater: {
+        length: 5
     }
 }
 

@@ -6,9 +6,15 @@ import {
 	TextInput,
 	Image,
 	TouchableHighlight,
-	ToastAndroid
+	ToastAndroid,
+    BackHandler,
+    Alert,
+    TouchableOpacity
 } from 'react-native';
 import Constants from '../constants';
+import Realm from 'realm';
+import Util from '../Util';
+import DBManager from '../DBManager';
 
 import SampleCollectionIcon from '../../assets/safety-suit.png';
 import TransporterIcon from '../../assets/delivery-man.png';
@@ -27,10 +33,27 @@ export default function Home({navigation, route}) {
         collectorObj
     ]};
 
+
     useEffect(() => {
         console.log('use effect called');
         setFinalRoles(filteredCollectionList);
+        saveInDB();
+
+        const backAction = () => {
+            if (navigation.isFocused()) {
+                BackHandler.exitApp()
+                return true;
+            }
+        };
+        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () => backHandler.remove();
+
 	}, []);
+
+
+    const saveInDB = () => {
+        DBManager.saveRoles(route.params);
+    }
 
     const inititealization = () => {
        makeFilterList();
@@ -72,6 +95,23 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(listObj)
 
     };
+
+    const signoutHandler = () => {
+        Alert.alert(
+            "Alert!",
+            "Do you want to logout?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => DBManager.logout(navigation)
+                }
+            ]
+        );
+    }
 
     const collectorObj = {
         "text": "Sample\nCollection",
@@ -223,7 +263,9 @@ export default function Home({navigation, route}) {
             <View style={styles.taskBoxContainer}>
                 {renderFinalTaskBoxes()}
             </View>
-            <Text style={styles.signout}>Sign Out</Text>
+            <TouchableOpacity onPress={signoutHandler}>
+              <Text style={styles.signout}>Sign Out</Text>
+            </TouchableOpacity>
 		</View>
 	);
 }
