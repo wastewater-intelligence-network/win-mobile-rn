@@ -92,7 +92,9 @@ export default function Home({navigation, route}) {
                 filteredCollectionList.push(technicianObj)
             } 
         }
-        filteredCollectionList.push(listObj)
+        filteredCollectionList.push(listObj);
+        filteredCollectionList.push(siteSurvey);
+        filteredCollectionList.push(inventoryManagement);
 
     };
 
@@ -135,6 +137,18 @@ export default function Home({navigation, route}) {
         "text": "Samples\nList",
         "icon": ListIcon,
         "navigate": Constants.screenName.SamplesList
+    }
+
+    const siteSurvey = {
+        "text": "Site\nSurvey",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.SiteSurvey
+    }
+
+    const inventoryManagement = {
+        "text": "Inventory\nManagement",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.Inventory
     }
 
 	const styles = StyleSheet.create({
