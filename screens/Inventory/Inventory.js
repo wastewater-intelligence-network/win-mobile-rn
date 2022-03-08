@@ -9,7 +9,7 @@ import {
 import Button from '../components/Button';
 
 
-const SiteSurvey = ({navigation}) => {
+const Inventory = ({navigation}) => {
 
     const [location, setLocation] = useState('');
     const [area, setArea] = useState('');
@@ -17,7 +17,7 @@ const SiteSurvey = ({navigation}) => {
 
     return(
         <View style={styles.container}>
-            <Text style={styles.pageHeading}>Site Survey</Text>		
+            <Text style={styles.pageHeading}>Inventory Survey</Text>		
 
                 <View>
                         <Text style={{ marginLeft:30, marginTop: 20 }}>Location</Text>
@@ -72,31 +72,6 @@ const SiteSurvey = ({navigation}) => {
                         </View>
                 </View>
 
-                <View >
-                    <Text style={{ marginLeft:30, marginTop: 20 }}>Date and Time</Text>
-                    <View style={styles.containerOfTwoText}>
-                        <View style={styles.inputViewLeft}>
-                            <TextInput
-                                style={styles.TextInput}
-                                placeholder="12 Jan"
-                                placeholderTextColor="#003f5c"
-                                value="07 Feb"
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
-                            />
-                        </View>
-
-                        <View style={styles.inputViewRight}>
-                            <TextInput
-                                style={styles.TextInput}
-                                placeholder="9.00PM"
-                                placeholderTextColor="#003f5c"
-                                value=""
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
-                            />
-                        </View>
-                    </View>
-
-                </View>
 
                 <View style={{marginLeft: 20, marginRight:20, marginTop:50, height: 40}}>
                         <Button onPress = {() => navigation.goBack()}>
@@ -171,4 +146,4 @@ const styles = StyleSheet.create({
 
  });
 
-export default SiteSurvey;
+export default Inventory;
