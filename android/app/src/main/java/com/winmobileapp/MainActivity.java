@@ -1,4 +1,4 @@
-package com.winmobileapp;
+package org.niua.win;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;

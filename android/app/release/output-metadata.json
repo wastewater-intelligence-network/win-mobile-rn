@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.winmobileapp",
+  "applicationId": "org.niua.win",
   "variantName": "release",
   "elements": [
     {
