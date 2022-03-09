@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 		padding: 20
 	},
 	accordionList: {
-		marginBottom: 80
+		marginBottom: 105
 	},
 	pageHeading: {
 		fontSize: 25,
