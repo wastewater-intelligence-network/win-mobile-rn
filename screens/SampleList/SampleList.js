@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 		padding: 20
 	},
 	accordionList: {
-		marginBottom: 80
+		marginBottom: 105
 	},
 	pageHeading: {
 		fontSize: 25,
@@ -292,11 +292,13 @@ const styles = StyleSheet.create({
 	accordionHeaderTitle: {
 		fontSize: 23,
 		fontWeight: '100',
-		fontFamily: "Quicksand"
+		fontFamily: "Quicksand",
+		color: Constants.colors.grayColor
 	},
 	accordionHeaderTime: {
 		fontSize: 17,
-		fontFamily: "QuicksandBold"
+		fontFamily: "QuicksandBold",
+		color: Constants.colors.grayColor
 	},
 	accordionHeaderRightContainer: {
 		paddingTop: 9,
@@ -333,11 +335,13 @@ const styles = StyleSheet.create({
 	},
 	accordionBodyTableKey: {
 		flex: 1,
-		fontFamily: "QuicksandBold"
+		fontFamily: "QuicksandBold",
+		color: Constants.colors.grayColor
 	},
 	accordionBodyTableValue: {
 		flex: 2,
-		fontFamily: "Quicksand"
+		fontFamily: "Quicksand",
+		color: Constants.colors.grayColor
 	},
 	accordionBodyStatusContainer: {
 		marginTop: 20,
@@ -347,10 +351,12 @@ const styles = StyleSheet.create({
 	},
 	detailedStatusText: {
 		fontFamily: "QuicksandBold",
+		color: Constants.colors.grayColor
 	},
 	detailedStatusDate: {
 		fontSize: 13,
 		fontFamily: "Quicksand",
+		color: Constants.colors.grayColor
 	},
 	dateStyle: {
 		marginTop: -5,

@@ -214,7 +214,7 @@ export default function SampleCollector({ navigation }) {
 
           <Overlay isVisible={location === undefined}>
             <ActivityIndicator size="large" color="#0000ff" />
-            <Text>Getting your location</Text>
+            <Text style={{color: Constants.colors.grayColor}}>Getting your location</Text>
 		  </Overlay>
 
          	 <Overlay
@@ -231,6 +231,7 @@ export default function SampleCollector({ navigation }) {
 						autoCapitalize='none'
 						keyboardType='decimal-pad'
 						onChangeText={setPhValue}
+						placeholderTextColor = {Constants.colors.grayColor}
 					/>
 					<TextInput
 						style={styles.sampleDataInput}
@@ -239,6 +240,8 @@ export default function SampleCollector({ navigation }) {
 						autoCapitalize='none'
 						keyboardType='decimal-pad'
 						onChangeText={setTemparatureValue}
+						placeholderTextColor = {Constants.colors.grayColor}
+
 					/>
 					<TextInput
 						style={styles.sampleDataInput}
@@ -247,6 +250,8 @@ export default function SampleCollector({ navigation }) {
 						autoCapitalize='none'
 						keyboardType='decimal-pad'
 						onChangeText={setInflowValue}
+						placeholderTextColor = {Constants.colors.grayColor}
+
 					/>
 					<TouchableHighlight 
 						style={styles.button}
@@ -320,12 +325,14 @@ const styles = StyleSheet.create({
 	},
 	sampleDataHeading: {
 		fontSize: 20,
-		paddingHorizontal: 30
+		paddingHorizontal: 30,
+		color: Constants.colors.grayColor
 	},
 	sampleDataInput: {
 		margin: 5,
 		padding: 10,
-		backgroundColor: '#eee'
+		backgroundColor: '#eee',
+		color: Constants.colors.grayColor
 	},
 	button: {
 		marginVertical: 5,
@@ -341,7 +348,8 @@ const styles = StyleSheet.create({
 	pointListHeading: {
 		fontSize: 18,
 		fontWeight: 'bold',
-		marginVertical: 10
+		marginVertical: 10,
+		color: Constants.colors.grayColor
 	},
 	pointListItemContainer: {
 		backgroundColor: Constants.colors.primary,

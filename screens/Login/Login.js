@@ -44,6 +44,7 @@ export default function Login({navigation}) {
 			padding: 10,
 			backgroundColor: '#E6E8ED',
 			margin: 10,
+			color: Constants.colors.grayColor
 		},
 		button: {
 			width: '100%',
@@ -105,7 +106,7 @@ export default function Login({navigation}) {
 					fontFamily: "Quicksand",
 					marginTop: 10,
 					marginBottom: 10,
-					color: 'gray'
+					color: Constants.colors.grayColor
 				}}
 			>An initiative to manage the spread and impact of SARS-CoV-2 through Wastewater-based Epidemiology (WBE)</Text>
 			
@@ -117,8 +118,8 @@ export default function Login({navigation}) {
 				onChangeText={setUsername}
 				selectionColor="#756BDE"
                 autoCapitalize='none'
-				placeholderTextColor={'gray'}
-				color={'gray'}
+				placeholderTextColor={Constants.colors.grayColor}
+
 			/>
 			<TextInput
 				style={styles.inputBox}
@@ -128,8 +129,7 @@ export default function Login({navigation}) {
 				selectionColor="#756BDE"
                 autoCapitalize='none'
 				secureTextEntry={true}
-				placeholderTextColor={'gray'}
-				color={'gray'}
+				placeholderTextColor={Constants.colors.grayColor}
 				/>
 			{ loading === false ?
 			<TouchableHighlight 

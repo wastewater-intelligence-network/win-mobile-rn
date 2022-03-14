@@ -174,11 +174,13 @@ export default function Home({navigation, route}) {
             fontSize: 14,
             paddingTop: 5,
             textAlign: "center",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            color: Constants.colors.grayColor
         },
         signout: {
             marginTop: 60,
             fontSize: 15,
+            color: Constants.colors.grayColor
         }
 	});
 

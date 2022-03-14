@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Modal, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
+import Constants from './constants';
 import LabDetails from './LabDetails';
 
 export default function WinCustomAlert({
@@ -49,7 +50,7 @@ export default function WinCustomAlert({
                    <Icon name="close-circle-outline" size={40} color="red" /> 
                 </>
               )}
-              <Text style={{fontSize: 20, marginTop: 8}}>{displayMsg}</Text>
+              <Text style={{fontSize: 20, marginTop: 8, color: Constants.colors.grayColor}}>{displayMsg}</Text>
                 { labResponse.message === undefined ?
                 <Text></Text>
                   :

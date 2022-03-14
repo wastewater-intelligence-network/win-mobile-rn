@@ -4,6 +4,7 @@ import {
     View
 } from 'react-native';
 import Util from './Util';
+import Constants from './constants';
 
 export default function LabDetails({labResponse}) {
 
@@ -49,7 +50,8 @@ const styles = {
     },
 
     textStyle: {
-        fontWeight: '500'
+        fontWeight: '500',
+        color: Constants.colors.grayColor
     }
 };
 

@@ -11,7 +11,8 @@ var Constants = {
     colors: {
         primary: "#756BDE",
         primaryDark: "#4e41d5",
-        gray: "#d4d4d4"
+        gray: "#d4d4d4",
+        grayColor: 'gray'
     },
     screenName: {
         SampleCollector: 'SampleCollector',
