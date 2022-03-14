@@ -96,7 +96,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -154,10 +154,13 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('debug.keystore')
-            storePassword '123465'
-            keyAlias 'wkey'
-            keyPassword '123465'
+              storeFile file(RELEASE_STORE_FILE)
+              storePassword RELEASE_STORE_PASSWORD
+              keyAlias RELEASE_KEY_ALIAS
+              keyPassword RELEASE_KEY_PASSWORD
+       // Optional, specify signing versions used
+              v1SigningEnabled true
+              v2SigningEnabled true
         }
     }
     buildTypes {
@@ -173,8 +176,13 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled enableProguardInReleaseBuilds 
+            shrinkResources enableProguardInReleaseBuilds
+            zipAlignEnabled enableProguardInReleaseBuilds
+            useProguard enableProguardInReleaseBuilds
+            
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
         }
     }
 

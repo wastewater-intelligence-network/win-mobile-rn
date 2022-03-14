@@ -104,7 +104,8 @@ export default function Login({navigation}) {
 					textAlign: "center",
 					fontFamily: "Quicksand",
 					marginTop: 10,
-					marginBottom: 10
+					marginBottom: 10,
+					color: 'gray'
 				}}
 			>An initiative to manage the spread and impact of SARS-CoV-2 through Wastewater-based Epidemiology (WBE)</Text>
 			
@@ -116,6 +117,8 @@ export default function Login({navigation}) {
 				onChangeText={setUsername}
 				selectionColor="#756BDE"
                 autoCapitalize='none'
+				placeholderTextColor={'gray'}
+				color={'gray'}
 			/>
 			<TextInput
 				style={styles.inputBox}
@@ -125,6 +128,8 @@ export default function Login({navigation}) {
 				selectionColor="#756BDE"
                 autoCapitalize='none'
 				secureTextEntry={true}
+				placeholderTextColor={'gray'}
+				color={'gray'}
 				/>
 			{ loading === false ?
 			<TouchableHighlight 
