@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View, 
     Text,
     StyleSheet,
     StatusBar,
     TextInput,
+    PermissionsAndroid
     } from 'react-native';
 import Button from '../components/Button';
 import {Picker} from '@react-native-picker/picker';
-
+import Geolocation from '@react-native-community/geolocation';
 
 const SiteSurvey = ({navigation}) => {
 
@@ -25,6 +26,37 @@ const SiteSurvey = ({navigation}) => {
         alert('Submit button clicked!!need to integerate API')
     };
 
+    const requestLocationPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: "WinMobile App Location Permission",
+              message: "WinMobile App needs access to your location ",
+              buttonPositive: "OK"
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            getLocation();
+          } else {
+            requestLocationPermission();
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
+
+      const getLocation = () => {
+            Geolocation.getCurrentPosition((data) =>{
+                let lat_long = 'lat ' +data.coords.latitude + ',long ' + data.coords.longitude
+                setLocation(lat_long);               
+            })
+         };
+
+    useEffect(() => {
+        requestLocationPermission();
+      }, []);
+
     return(
         <View style={styles.container}>
             <Text style={styles.pageHeading}>Site Survey</Text>		
@@ -37,12 +69,13 @@ const SiteSurvey = ({navigation}) => {
                                 placeholder="Location"                               
                                 value={location}
                                 onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                editable={false}
                             />
                         </View>
                 </View>	
 
                 <View>
-                        <Text style={styles.titleLabel}>Sampling Site</Text>
+                        <Text style={styles.titleLabel}>Sampling Site Name</Text>
                         <View style={styles.inputView}>
                             <TextInput
                                 style={styles.TextInput}
