@@ -207,7 +207,7 @@ export default function SampleList({ navigation }) {
 			<TouchableOpacity onPress={() => setOpen(true)}>
 				<Text style={styles.chooseDateStyle}>--- Select Date ---</Text>
 			</TouchableOpacity>
-            
+			<Text style={styles.dateStyle}>Samples available: {sampleList.length}</Text>
 			<DatePicker
 				modal
 				mode = "date"
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
 		color: Constants.colors.grayColor
 	},
 	dateStyle: {
-		marginTop: -5,
+		marginTop: -2,
 		fontWeight: '500',
 		fontFamily: "Quicksand",
 		color: "#756BDE"
