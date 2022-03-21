@@ -20,7 +20,9 @@ var Constants = {
         SampleAcceptance: 'SampleAcceptance',
         SamplesList: 'SamplesList',
         Login: 'Login',
-        Home: 'Home'
+        Home: 'Home',
+        SiteSurvey: 'SiteSurvey',
+        Inventory:'InventoryManagement'
     },
     status: {
         sampleCollected: 'sample_collected',

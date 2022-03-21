@@ -10,7 +10,8 @@ import SampleList from './screens/SampleList/SampleList';
 import SampleCollector from './screens/SampleCollector/SampleCollector';
 import SampleTransporter from './screens/SampleTransporter/SampleTransporter';
 import Util from './screens/Util';
-
+import SiteSurvey from './screens/SiteSurvey/SiteSurvey';
+import Inventory from './screens/Inventory/Inventory';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,20 @@ export default function App() {
 					component={SampleList}
 					options={{headerShown: false}}
 				/>
+
+				<Stack.Screen
+					name={Constants.screenName.SiteSurvey}
+					component={SiteSurvey}
+					options={{headerShown: false}}
+				/>
+
+				<Stack.Screen
+					name={Constants.screenName.Inventory}
+					component={Inventory}
+					options={{headerShown: false}}
+				/>
+
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
