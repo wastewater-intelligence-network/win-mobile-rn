@@ -27,6 +27,7 @@ import BarcodeMask from 'react-native-barcode-mask';
 import DBManager from '../DBManager';
 import Util from '../Util';
 import Spinner from '../Spinner';
+import WinQRScanAlert from '../WinQRScanAlert';
 
 export default function SampleCollector({ navigation }) {
 
@@ -41,7 +42,7 @@ export default function SampleCollector({ navigation }) {
     const [scanned, setScanned] = useState(true);
     const [qrData, setQrData] = useState(undefined);
     const [collectionPointList, setCollectionPointList] = useState(undefined);
-
+	const [showScanPopup, setshowScanPopup] = useState(false);
 
 
     const [phValue, setPhValue] = useState(undefined)
@@ -55,6 +56,8 @@ export default function SampleCollector({ navigation }) {
 	const [reactiveQR, setReactiveQR] = useState(true);
 	const [scanner, setScanner] = useState(null);
 	const [loading, setLoading] = useState(false);
+	
+	let screenShotsPath = undefined;
 
 	const takeScreenShots = () => {
 		captureScreen({
@@ -62,7 +65,11 @@ export default function SampleCollector({ navigation }) {
 			quality: 0.8
 		  })
 		  .then(
-			uri => console.log("Image saved to", uri),
+			uri => {
+				console.log("Image saved to", uri);
+				screenShotsPath = uri;
+				console.log(`stored screenshots=${screenShotsPath}`);
+			},
 			error => console.error("Oops, snapshot failed", error)
 		  );
 	}
@@ -129,6 +136,17 @@ export default function SampleCollector({ navigation }) {
           console.warn(err);
         }
       };
+
+	const configureAdditionalField = () => {
+		toggleOverlay('sampleDataOverlay');
+	}
+
+	const resetQRScan = () => {
+		setQrData(undefined);
+		scanner.reactivate();
+		setScanned(false);
+		setReactiveQR(false);
+	}
     
     const getLocation = () => {
         Geolocation.getCurrentPosition((data) =>{
@@ -148,8 +166,9 @@ export default function SampleCollector({ navigation }) {
 	  let qrCode = (e.data).toUpperCase()
 	  setQrData(qrCode);
 	  if (Util.isValidQRScan(qrCode)) {
-		setReactiveQR(false)
-		toggleOverlay('sampleDataOverlay')
+		setReactiveQR(false);
+		setshowScanPopup(true);
+	//	toggleOverlay('sampleDataOverlay')
 	  } else {
 		// setServerMessage(Constants.alertMessages.invalidQRCode)
 		// setShowErrPopup(true);
@@ -296,6 +315,16 @@ export default function SampleCollector({ navigation }) {
 						dismissAlert={setShowErrPopup}
 						onPressHandler = {() => errorAction() }
 					/>
+
+					<WinQRScanAlert
+						displayMode={'failed'}
+						displayMsg={qrData}
+						visibility={showScanPopup}
+						dismissAlert={setshowScanPopup}
+						onConfirmPressHandler = {() => configureAdditionalField() }
+						onDiscardPressHandler = {() => resetQRScan() }
+					/>
+
 					{loading === true ? <Spinner /> : null}
 					
         </View>
