@@ -18,7 +18,7 @@ import {
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import { Overlay } from 'react-native-elements';
-
+import { captureScreen } from "react-native-view-shot";
 import Geolocation from '@react-native-community/geolocation';
 import Constants from '../constants';
 import WinCustomAlert from '../WinCustomAlert';
@@ -56,6 +56,16 @@ export default function SampleCollector({ navigation }) {
 	const [scanner, setScanner] = useState(null);
 	const [loading, setLoading] = useState(false);
 
+	const takeScreenShots = () => {
+		captureScreen({
+			format: "jpg",
+			quality: 0.8
+		  })
+		  .then(
+			uri => console.log("Image saved to", uri),
+			error => console.error("Oops, snapshot failed", error)
+		  );
+	}
 
     const handleSampleDataSubmit = (pointId) => {
     console.log(`${Constants.debugDesc.text} handle additional data with point id=${pointId}`);
@@ -133,6 +143,7 @@ export default function SampleCollector({ navigation }) {
 
     onSuccess = e => {
       console.log(`capture data=${e.data}`);
+	  takeScreenShots();
       setScanned(true)
 	  let qrCode = (e.data).toUpperCase()
 	  setQrData(qrCode);
