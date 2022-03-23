@@ -39,7 +39,7 @@ export default function WinQRScanAlert({
               elevation: 10,
             }}>
             <View style={{alignItems: 'center', margin: 20}}>
-              <Text style={{fontSize: 20, marginTop: 8}}>Scanned QR Code</Text>
+              <Text style={{fontSize: 20, marginTop: 5}}>Scanned QR Code</Text>
               <Text style={{fontWeight:'900', fontSize: 40}}>
                       {displayMsg}
             </Text>
@@ -64,26 +64,26 @@ export default function WinQRScanAlert({
 
             <TouchableOpacity
               activeOpacity={0.9}
-              style={{backgroundColor: '#756BDE',  width:'40%', alignItems:'center'}}
+              style={{backgroundColor: '#756BDE',  width:'35%', alignItems:'center', borderRadius: 10}}
               onPress={() => {
                   dismissAlert(false)
                   onDiscardPressHandler();
                 }
              }
               >
-              <Text style={{color: 'white', margin: 15}}>Scan Again</Text>
+              <Text style={{color: 'white', margin: 15, fontSize: 15}}>Scan Again</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               activeOpacity={0.9}
-              style={{backgroundColor: '#756BDE', width:'40%', alignItems:'center'}}
+              style={{backgroundColor: '#756BDE', width:'35%', alignItems:'center',borderRadius: 10 }}
               onPress={() => {
                   dismissAlert(false)
                   onConfirmPressHandler();
                 }
              }
               >
-              <Text style={{color: 'white', margin: 15}}>Confirm</Text>
+              <Text style={{color: 'white', margin: 15, fontSize: 15}}>Confirm</Text>
             </TouchableOpacity>
 
           </View>
