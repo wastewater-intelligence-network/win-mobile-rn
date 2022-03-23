@@ -38,8 +38,8 @@ export default function SampleList({ navigation }) {
 		setDate(Util.getCurrentDate)
 		sampleTracking.getSamplesList(Util.getFilteredDate(), navigation)
 			.then(data => {
-				setSampleList(data)
-				setDataLoaded(true)
+				setSampleList(data);
+				setDataLoaded(true);
 			})
 	}, [])
 
