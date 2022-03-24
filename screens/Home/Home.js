@@ -66,6 +66,7 @@ export default function Home({navigation, route}) {
         if (roleList === undefined) {
             return
         } 
+
         if(roleList.indexOf(Constants.userRoles.collector) !== -1) {
            filteredCollectionList.push(collectorObj)
         } 
@@ -95,6 +96,7 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(listObj);
         filteredCollectionList.push(siteSurvey);
         filteredCollectionList.push(inventoryManagement);
+        filteredCollectionList.push(siteSuveyList);
 
     };
 
@@ -149,6 +151,12 @@ export default function Home({navigation, route}) {
         "text": "Inventory\nManagement",
         "icon": ListIcon,
         "navigate": Constants.screenName.Inventory
+    }
+
+    const siteSuveyList = {
+        "text": "Site survey List",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.SiteSurveyList
     }
 
 	const styles = StyleSheet.create({

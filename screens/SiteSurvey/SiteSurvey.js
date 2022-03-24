@@ -5,25 +5,47 @@ import {
     StyleSheet,
     StatusBar,
     TextInput,
-    PermissionsAndroid
+    PermissionsAndroid,
+    ToastAndroid,
+    ActivityIndicator
     } from 'react-native';
 import Button from '../components/Button';
 import {Picker} from '@react-native-picker/picker';
 import Geolocation from '@react-native-community/geolocation';
+import SampleTracking from '../../controllers/sample_tracking';
+import Spinner from '../Spinner';
 
 const SiteSurvey = ({navigation}) => {
 
     const [location, setLocation] = useState('');
+    const [locationData, setLocationData] = useState(undefined);
+
     const [samplingSite, setsamplingSite] = useState('');
     const [siteID, setSiteID] = useState('');
     const [selectedSamplingSite, setSelectedSamplingSite] = useState('');
     const [preferredTypes, setPreferredTypes] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     let placeholderTextColor = "#d3d3d1";
+    
+    const resetField = () => {
+        setsamplingSite('');
+        setSiteID('');
+        setSelectedSamplingSite('');
+        setPreferredTypes('');
+    };
 
     const submitHandle = () => {
-        
-        console.log(`location=${location} sampling site=${samplingSite} site id=${siteID} Site type=${selectedSamplingSite} preferred type=${preferredTypes}`);
-        alert('Submit button clicked!!need to integerate API')
+
+        var sampleTracking = new SampleTracking();
+        setIsLoading(true);
+        console.log(`location=${locationData.coords.latitude} ${locationData.coords.longitude} sampling site=${samplingSite} site id=${siteID} Site type=${selectedSamplingSite} preferred type=${preferredTypes}`);
+        sampleTracking.siteSurveyCollected(locationData, samplingSite, siteID, selectedSamplingSite,preferredTypes, navigation)
+            .then((res) => {
+                console.log('getting response', res);
+                setIsLoading(false);
+                resetField();
+                ToastAndroid.showWithGravity("Submitted Successfully", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+            })
     };
 
     const requestLocationPermission = async () => {
@@ -48,6 +70,7 @@ const SiteSurvey = ({navigation}) => {
 
       const getLocation = () => {
             Geolocation.getCurrentPosition((data) =>{
+                setLocationData(data)
                 let lat_long = 'lat ' +data.coords.latitude + ',long ' + data.coords.longitude
                 setLocation(lat_long);               
             })
@@ -55,6 +78,9 @@ const SiteSurvey = ({navigation}) => {
 
     useEffect(() => {
         requestLocationPermission();
+          
+
+
       }, []);
 
     return(
@@ -133,11 +159,16 @@ const SiteSurvey = ({navigation}) => {
                         </View>
                 </View>
 
-                <View style={{marginLeft: 20, marginRight:20, marginTop:50, height: 40}}>
+                {
+                    isLoading == false ? 
+                    <View style={{marginLeft: 20, marginRight:20, marginTop:50, height: 40}}>
                         <Button onPress = {() => submitHandle()}>
                             Submit
                         </Button>
-                 </View>
+                     </View>
+                     :
+                     <Spinner /> 
+                }
                 
         </View>
     );
