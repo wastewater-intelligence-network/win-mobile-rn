@@ -16,6 +16,81 @@ import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion
 import SampleTracking from '../../controllers/sample_tracking';
 import Util from "../Util";
 import Spinner from "../Spinner";
+import Constants from "../constants";
+
+const data=[
+    {
+		"assignedPointId":23,
+		"assignedPointName":"Bhesan Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"STP"
+	},
+    {
+		"assignedPointId":24,
+		"assignedPointName":"Patna Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"STP"
+	},
+    {
+		"assignedPointId":25,
+		"assignedPointName":"Surat Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"TET"
+	},
+    {
+		"assignedPointId":25,
+		"assignedPointName":"Surat Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"TET"
+	},
+    {
+		"assignedPointId":25,
+		"assignedPointName":"Surat Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"TET"
+	},
+    {
+		"assignedPointId":26,
+		"assignedPointName":"Surat Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"TET"
+	},
+    {
+		"assignedPointId":27,
+		"assignedPointName":"Surat Jahangirabad",
+		"assignedUserId":1,
+		"date":"29/11/2021",
+		"latitude":23.4524242,
+		"longitude":77.3534242,
+		"time":"06:00 AM",
+		"type":"TET"
+	},
+    
+];
 
 
 const Schedules = ({ navigation }) => {
@@ -38,65 +113,9 @@ const Schedules = ({ navigation }) => {
 			})
 	}
 
-    const renderBody = (item) => {
-		return (
-			<View style={styles.accordionBody}>
-                <Text>Hello I am on details</Text>
-				{/* {renderBody
-					[
-						["Sample ID", item.sampleId],
-						["Container ID", item.containerId],
-						["Location ID", item.sampleCollectionLocation.pointId],
-						["Type", item.sampleCollectionLocation.type]
-					].map((v, i) => {
-						if (v) {
-							return (
-								<View key={i} style={styles.accordionBodyRow}>
-									<Text style={styles.accordionBodyTableKey}>{v[0]}</Text>
-									<Text style={styles.accordionBodyTableValue}>{v[1]}</Text>
-								</View>
-							)
-						}
-					})
-				}
-				<View style={styles.accordionBodyStatusContainer}>
-					{renderDetailedStatus(item.statusLog)}
-				</View> */}
-			</View>
-		);
-	}
+    const renderBody = ({ item }) => {
 
-    const renderHeader = (item) => {
-		
-        return (
-			<View
-				style={ styles.accordionHeader }
-			>
-				<View
-					style={styles.accordionHeaderLeftContainer}
-				>
-					<Text
-						style={styles.accordionHeaderTitle}
-					>
-						{item.longitude}
-					</Text>
-					<Text style={styles.accordionHeaderTime}>
-						 {item.time} 
-					</Text>
-				</View>
-
-				{/* <View
-					style={{ backgroundColor: statusRes.color, ...styles.accordionHeaderRightContainer }}
-				>
-					<Image
-						source={statusRes.icon}
-						style={styles.accordionHeaderStatusImg}
-					/>
-					<Text style={styles.accordionHeaderStatusText}>{statusRes.short}</Text>
-				</View> */}
-
-			</View>
-		);
+        
 	}
 
     return(
@@ -105,15 +124,41 @@ const Schedules = ({ navigation }) => {
 
             { dataLoaded === true  ?
 			<View style={styles.container}> 
-				{scheduleList.length > 0 ?
+				{data.length > 0 ?
 					<View style={styles.accordionContainer}>
-						<AccordionList
-							style={styles.accordionList}
-							list={scheduleList}
-							header={renderHeader}
-							body={renderBody}
-							keyExtractor={item => item.longitude}
-						/>
+						 <FlatList
+                            style={{marginTop: 0}}
+                            data={data}
+                            keyExtractor={item=>item.assignedPointId}
+                            renderItem={({item})=> {
+                                return(         
+                                       <View style={styles.listViewContainer}>                         
+                                                <Text style={styles.headerTitle}>{item.assignedPointName}</Text>
+                                                <View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Point ID:</Text>
+                                                      <Text style={styles.textStyle}>{item.assignedPointId}</Text>
+                                                </View>
+                                                <View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Date:</Text>
+                                                      <Text style={styles.textStyle}>{item.date}</Text>
+                                                </View>
+                                                <View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Latitude:</Text>
+                                                      <Text style={styles.textStyle}>{item.latitude}</Text>
+                                                </View>
+                                                <View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Longitude:</Text>
+                                                      <Text style={styles.textStyle}>{item.longitude}</Text>
+                                                </View>
+                                                <View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Type:</Text>
+                                                      <Text style={styles.textStyle}>{item.type}</Text>
+                                                </View>
+                                        </View>
+                                );
+                                     }            
+                                  }
+                      />
 					</View> 
 				:
 					<View style={styles.messageContainerStyle}>
@@ -134,10 +179,11 @@ const Schedules = ({ navigation }) => {
 const styles = StyleSheet.create({
 
     container: {
-        marginTop: StatusBar.currentHeight,
+        marginTop:StatusBar.currentHeight,
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '100%',
+        flex:1
     },
 
     pageHeading: {
@@ -154,23 +200,35 @@ const styles = StyleSheet.create({
 		padding: 20
 	},
 
-    accordionList: {
-		marginBottom: 105
-	},
-
-    accordionHeader: {
-		flex: 1,
-		flexDirection: 'row',
-		backgroundColor: '#fff',
-		paddingVertical: 10,
-		paddingHorizontal: 10,
-		marginTop: 10,
-		alignItems: 'center',
+    listViewContainer: {
+        marginTop: 10,
 		borderWidth: 1,
 		borderColor: '#a1a1a1',
 		borderTopLeftRadius: 5,
-		borderTopRightRadius: 5
+		borderTopRightRadius: 5,
+        width: '70%',
+        alignSelf:'center',
+        padding: 5
+    },
+    headerTitle: {
+		fontSize: 23,
+		fontWeight: '100',
+		fontFamily: "Quicksand",
+		color: Constants.colors.grayColor,
 	},
+	headerTime: {
+		fontSize: 17,
+		fontFamily: "QuicksandBold",
+		color: Constants.colors.grayColor
+	},
+    sectionStyle: {
+        flexDirection: 'row',
+        justifyContent:'space-between'
+    },
+    textStyle: {
+        fontWeight: '400',
+        color: Constants.colors.black
+    }
 });
 
 export default Schedules;
