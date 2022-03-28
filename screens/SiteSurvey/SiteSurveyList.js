@@ -13,7 +13,7 @@ import {
 
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import SampleTracking from '../../controllers/sample_tracking';
 import Util from "../Util";
 import Spinner from "../Spinner";
@@ -46,17 +46,15 @@ const SiteSurveyList = ({ navigation }) => {
 		let filterdata = scheduleList.filter((item) => item._id == id).map(({pointId, name, location,type,samplingType }) => ({ pointId, name, location,type,samplingType }));
 		console.log('filtered data', filterdata);
 		let json = filterdata[0];
-		console.log('name', json.name);
+        console.log('name', json.name);
 		console.log('latitude', json.location.coordinates[0]);
 		console.log('longitude', json.location.coordinates[1]);
-		
-
 	}
 
 	const siteSurveyClickHandle = (id) => {
         Alert.alert(
             "Alert!",
-            "Do you want to Update survey point to collection point",
+            "Do you want to Update survey point to collection point?",
             [
                 {
                     text: "No",
@@ -76,7 +74,7 @@ const SiteSurveyList = ({ navigation }) => {
 
             { dataLoaded === true  ?
 			<View style={styles.container}> 
-				{data.length > 0 ?
+				{scheduleList.length > 0 ?
 					<View style={styles.accordionContainer}>
 						 <FlatList
                             style={{marginTop: 0}}
@@ -90,9 +88,10 @@ const SiteSurveyList = ({ navigation }) => {
 													 <TouchableOpacity
 													 	onPress={()=>siteSurveyClickHandle(item._id) }
 													 >
-														 <Image source={WinLogoColor} style={styles.winLogo} />
+														 <Icon name="add-circle-outline" size={30} color="green" />
 													 </TouchableOpacity>
 											 	</View>
+                                                 <Text></Text>
 
                                                 <View style={styles.sectionStyle}>
                                                       <Text style={styles.textStyle}>Point ID:</Text>
