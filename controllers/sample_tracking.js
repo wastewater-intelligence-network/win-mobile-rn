@@ -34,7 +34,36 @@ export default class SampleTracking {
         })
     }
 
-    
+    upgradeSurveyPointToCollectionPoint = (latitude, longitude, siteName, pointID, samplingType, prefferedType, navigation) => {
+
+        return new Promise((resolve, reject) => {
+            var data = {
+                "pointId": pointID,
+                "name": siteName,
+                "location": {
+                    "type": "Point",
+                    "coordinates": [
+                        latitude, 
+                        longitude
+                    ]
+                },
+                "type": samplingType,
+                "samplingType": prefferedType
+            }
+
+            Fetch('/upgradeSurveyPointToCollectionPoint', {
+                method: 'PATCH',
+                body: JSON.stringify(data)
+            }, navigation)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(`response of upgradeSurveyPointToCollectionPoint =${res}`)
+                    console.log(`${Constants.debugDesc.text} got response of upgradeSurveyPointToCollectionPoint =${JSON.stringify(res)}`)
+                    resolve(res)
+                })
+                .catch(reject)
+        })
+    }
 
     sampleCollected = (location, containerId, pointId, additionalData, navigation) => {
         return new Promise((resolve, reject) => { 
