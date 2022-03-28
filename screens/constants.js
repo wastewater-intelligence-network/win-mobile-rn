@@ -60,7 +60,8 @@ var Constants = {
     },
 
     scanCharater: {
-        length: 5
+        length: 5,
+        regEx: /^(?:[A-Za-z0-9]+)$/
     }
 }
 

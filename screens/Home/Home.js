@@ -35,10 +35,8 @@ export default function Home({navigation, route}) {
 
 
     useEffect(() => {
-        console.log('use effect called');
         setFinalRoles(filteredCollectionList);
         saveInDB();
-
         const backAction = () => {
             if (navigation.isFocused()) {
                 BackHandler.exitApp()
@@ -262,7 +260,6 @@ export default function Home({navigation, route}) {
 
         Object.keys(rol).forEach((role, idx) => {
             rol[role].forEach((r, rIdx) => {
-
                 view.push(
                     <TouchableHighlight 
                         key={10*idx + rIdx}
