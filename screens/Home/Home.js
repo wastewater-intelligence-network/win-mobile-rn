@@ -66,6 +66,7 @@ export default function Home({navigation, route}) {
         if (roleList === undefined) {
             return
         } 
+
         if(roleList.indexOf(Constants.userRoles.collector) !== -1) {
            filteredCollectionList.push(collectorObj)
         } 
@@ -95,8 +96,8 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(listObj);
         filteredCollectionList.push(siteSurvey);
         filteredCollectionList.push(inventoryManagement);
+        filteredCollectionList.push(siteSuveyList);
         filteredCollectionList.push(schedules);
-
     };
 
     const signoutHandler = () => {
@@ -152,6 +153,11 @@ export default function Home({navigation, route}) {
         "navigate": Constants.screenName.Inventory
     }
 
+    const siteSuveyList = {
+        "text": "Site survey List",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.SiteSurveyList
+    }
     const schedules = {
         "text": "Schedules",
         "icon": ListIcon,
