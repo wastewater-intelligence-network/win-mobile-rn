@@ -13,6 +13,7 @@ import Util from './screens/Util';
 import SiteSurvey from './screens/SiteSurvey/SiteSurvey';
 import Inventory from './screens/Inventory/Inventory';
 import SiteSurveyList from './screens/SiteSurvey/SiteSurveyList';
+import Schedules from './screens/Schedules/Schedules';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,11 @@ export default function App() {
 					component={SiteSurveyList}
 					options={{headerShown: false}}
 				/> 
+				<Stack.Screen
+					name={Constants.screenName.Schedule}
+					component={Schedules}
+					options={{headerShown: false}}
+				/>
 
 			</Stack.Navigator>
 		</NavigationContainer>

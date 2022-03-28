@@ -97,7 +97,7 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(siteSurvey);
         filteredCollectionList.push(inventoryManagement);
         filteredCollectionList.push(siteSuveyList);
-
+        filteredCollectionList.push(schedules);
     };
 
     const signoutHandler = () => {
@@ -158,6 +158,11 @@ export default function Home({navigation, route}) {
         "icon": ListIcon,
         "navigate": Constants.screenName.SiteSurveyList
     }
+    const schedules = {
+        "text": "Schedules",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.Schedule
+    }
 
 	const styles = StyleSheet.create({
 		container: {
@@ -180,8 +185,8 @@ export default function Home({navigation, route}) {
             flexWrap: "wrap"
         },
         taskBox: {
-            width: "45%",
-            height: 140,
+            width: "30%",
+            height: 120,
             backgroundColor: "#eee",
             margin: 5,
             justifyContent: "center",

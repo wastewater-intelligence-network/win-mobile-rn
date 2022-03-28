@@ -153,10 +153,10 @@ export default class SampleTracking {
                     console.log(`response of sample point list =${res}`)
                     console.log(`${Constants.debugDesc.text} josn of sample point is =${JSON.stringify(res)}`)
                     resolve(res)
+
                 })
                 .catch(reject)
         })
     }
 
-    
 }
