@@ -78,4 +78,19 @@ export default class SampleTracking {
                 .catch(reject)
         })
     }
+
+    getSchedules  = (date, navigation) => {
+        return new Promise((resolve, reject) => {
+            Fetch('/getSchedule', {
+                method: 'GET'
+            }, navigation)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(`response of get schedules =${res.schedule}`)
+                    console.log(`${Constants.debugDesc.text} josn of samplelist is =${JSON.stringify(res.schedule)}`)
+                    resolve(res.schedule);
+                })
+                .catch(reject)
+        })
+    }
 }

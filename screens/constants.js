@@ -22,7 +22,8 @@ var Constants = {
         Login: 'Login',
         Home: 'Home',
         SiteSurvey: 'SiteSurvey',
-        Inventory:'InventoryManagement'
+        Inventory:'InventoryManagement',
+        Schedule: 'Schedules'
     },
     status: {
         sampleCollected: 'sample_collected',
