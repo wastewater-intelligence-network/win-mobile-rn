@@ -3,6 +3,7 @@ import {Modal, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import Constants from './constants';
 import LabDetails from './LabDetails';
+import CollectionPointsModel from './CollectionPointsModel';
 
 export default function WinCustomAlert({
   displayMode,
@@ -11,7 +12,9 @@ export default function WinCustomAlert({
   dismissAlert,
   onPressHandler,
   calculatedHeight = 200,
-  labResponse = {}
+  labResponse = {},
+  collectionPoints = {}
+
 }) {
   return (
     <View>
@@ -55,7 +58,8 @@ export default function WinCustomAlert({
                 <Text></Text>
                   :
                   <View>
-                    <LabDetails labResponse={labResponse}/>
+                    {/* <LabDetails labResponse={labResponse}/> */}
+                     < CollectionPointsModel collectionRes={collectionRes} />
                   </View>
                 }
 
