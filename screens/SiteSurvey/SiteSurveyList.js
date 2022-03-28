@@ -8,7 +8,8 @@ import {
 	TouchableOpacity,
 	Dimensions,
 	FlatList,
-	Alert
+	Alert,
+    ToastAndroid
 } from "react-native";
 
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
@@ -40,15 +41,17 @@ const SiteSurveyList = ({ navigation }) => {
 	}
 
 	const siteSurveyHandle = (id) => {
-		console.log('site survey handle click called');
-		console.log('fetch clicked object=', id)
 
 		let filterdata = scheduleList.filter((item) => item._id == id).map(({pointId, name, location,type,samplingType }) => ({ pointId, name, location,type,samplingType }));
-		console.log('filtered data', filterdata);
-		let json = filterdata[0];
-        console.log('name', json.name);
-		console.log('latitude', json.location.coordinates[0]);
-		console.log('longitude', json.location.coordinates[1]);
+		let jsonData = filterdata[0];
+
+        var sampleTracking = new SampleTracking()
+		setDataLoaded(false)
+		sampleTracking.upgradeSurveyPointToCollectionPoint(jsonData.location.coordinates[0], jsonData.location.coordinates[1], jsonData.name, jsonData.pointId, jsonData.type, jsonData.samplingType, navigation)
+			.then(data => {
+                ToastAndroid.showWithGravity("Added Successful", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+				setDataLoaded(true);
+			})
 	}
 
 	const siteSurveyClickHandle = (id) => {
