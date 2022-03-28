@@ -34,6 +34,8 @@ export default class SampleTracking {
         })
     }
 
+    
+
     sampleCollected = (location, containerId, pointId, additionalData, navigation) => {
         return new Promise((resolve, reject) => { 
             var data = {
@@ -112,16 +114,15 @@ export default class SampleTracking {
         })
     }
 
-    getSamplesList = (date, navigation) => {
+    getAllPointsSurveyList = (date, navigation) => {
         return new Promise((resolve, reject) => {
             Fetch('/getAllPointsSurvey' , {
                 method: 'GET'
             }, navigation)
                 .then(res => res.json())
                 .then(res => {
-                    console.log(`response of sample list =${res}`)
-                    console.log(`${Constants.debugDesc.text} josn of samplelist is =${JSON.stringify(res)}`)
-
+                    console.log(`response of sample point list =${res}`)
+                    console.log(`${Constants.debugDesc.text} josn of sample point is =${JSON.stringify(res)}`)
                     resolve(res)
                 })
                 .catch(reject)
