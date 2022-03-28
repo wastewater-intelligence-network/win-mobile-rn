@@ -7,93 +7,21 @@ import {
 	Image,
 	TouchableOpacity,
 	Dimensions,
-	FlatList
+	FlatList,
+	Alert,
+    ToastAndroid
 } from "react-native";
 
 import { Collapse, CollapseHeader, CollapseBody, AccordionList } from 'accordion-collapse-react-native';
 
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import SampleTracking from '../../controllers/sample_tracking';
 import Util from "../Util";
 import Spinner from "../Spinner";
 import Constants from "../constants";
+import WinLogoColor from '../../assets/win_logo_color.png';
 
-const data=[
-    {
-		"assignedPointId":23,
-		"assignedPointName":"Bhesan Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"STP"
-	},
-    {
-		"assignedPointId":24,
-		"assignedPointName":"Patna Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"STP"
-	},
-    {
-		"assignedPointId":25,
-		"assignedPointName":"Surat Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"TET"
-	},
-    {
-		"assignedPointId":25,
-		"assignedPointName":"Surat Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"TET"
-	},
-    {
-		"assignedPointId":25,
-		"assignedPointName":"Surat Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"TET"
-	},
-    {
-		"assignedPointId":26,
-		"assignedPointName":"Surat Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"TET"
-	},
-    {
-		"assignedPointId":27,
-		"assignedPointName":"Surat Jahangirabad",
-		"assignedUserId":1,
-		"date":"29/11/2021",
-		"latitude":23.4524242,
-		"longitude":77.3534242,
-		"time":"06:00 AM",
-		"type":"TET"
-	},
-    
-];
-
-
-const Schedules = ({ navigation }) => {
+const SiteSurveyList = ({ navigation }) => {
 
     const[dataLoaded, setDataLoaded] = useState(false);
     const [scheduleList, setScheduleList] = useState(false);
@@ -105,54 +33,92 @@ const Schedules = ({ navigation }) => {
     const fetchSchedules = () => {
 		var sampleTracking = new SampleTracking()
 		setDataLoaded(false);
-		sampleTracking.getSchedules(Util.getFilteredDate(), navigation)
+		sampleTracking.getAllPointsSurveyList(Util.getFilteredDate(), navigation)
 			.then(data => {
-				setScheduleList(data)
-                console.log(`++++fetch data=${data}`);
-				setDataLoaded(true)
+				setScheduleList(data);
+				setDataLoaded(true);
 			})
 	}
 
-    const renderBody = ({ item }) => {
+	const siteSurveyHandle = (id) => {
 
-        
+		let filterdata = scheduleList.filter((item) => item._id == id).map(({pointId, name, location,type,samplingType }) => ({ pointId, name, location,type,samplingType }));
+		let jsonData = filterdata[0];
+
+        var sampleTracking = new SampleTracking()
+		setDataLoaded(false)
+		sampleTracking.upgradeSurveyPointToCollectionPoint(jsonData.location.coordinates[0], jsonData.location.coordinates[1], jsonData.name, jsonData.pointId, jsonData.type, jsonData.samplingType, navigation)
+			.then(data => {
+                ToastAndroid.showWithGravity("Added Successful", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+				setDataLoaded(true);
+			})
 	}
+
+	const siteSurveyClickHandle = (id) => {
+        Alert.alert(
+            "Alert!",
+            "Do you want to Update survey point to collection point?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => siteSurveyHandle(id)
+                }
+            ]
+        );
+    }
 
     return(
         <View style={styles.container}>
-            <Text style={styles.pageHeading}>Schedules</Text>	
+            <Text style={styles.pageHeading}>Survey Points</Text>	
 
             { dataLoaded === true  ?
 			<View style={styles.container}> 
-				{data.length > 0 ?
+				{scheduleList.length > 0 ?
 					<View style={styles.accordionContainer}>
 						 <FlatList
                             style={{marginTop: 0}}
-                            data={data}
-                            keyExtractor={item=>item.assignedPointId}
+                            data={scheduleList}
+                            keyExtractor={item=>item._id}
                             renderItem={({item})=> {
                                 return(         
-                                       <View style={styles.listViewContainer}>                         
-                                                <Text style={styles.headerTitle}>{item.assignedPointName}</Text>
+                                       <View style={styles.listViewContainer}> 
+									             <View style={styles.sectionStyle}>                        
+                                                	 <Text style={styles.headerTitle}>{item.name}</Text>
+													 <TouchableOpacity
+													 	onPress={()=>siteSurveyClickHandle(item._id) }
+													 >
+														 <Icon name="add-circle-outline" size={30} color="green" />
+													 </TouchableOpacity>
+											 	</View>
+                                                 <Text></Text>
+
                                                 <View style={styles.sectionStyle}>
                                                       <Text style={styles.textStyle}>Point ID:</Text>
-                                                      <Text style={styles.textStyle}>{item.assignedPointId}</Text>
+                                                      <Text style={styles.textStyle}>{item.pointId}</Text>
                                                 </View>
                                                 <View style={styles.sectionStyle}>
-                                                      <Text style={styles.textStyle}>Date:</Text>
-                                                      <Text style={styles.textStyle}>{item.date}</Text>
+                                                      <Text style={styles.textStyle}>Name:</Text>
+                                                      <Text style={styles.textStyle}>{item.name}</Text>
                                                 </View>
                                                 <View style={styles.sectionStyle}>
                                                       <Text style={styles.textStyle}>Latitude:</Text>
-                                                      <Text style={styles.textStyle}>{item.latitude}</Text>
+                                                      <Text style={styles.textStyle}>{item.location.coordinates[0]}</Text>
                                                 </View>
                                                 <View style={styles.sectionStyle}>
                                                       <Text style={styles.textStyle}>Longitude:</Text>
-                                                      <Text style={styles.textStyle}>{item.longitude}</Text>
+                                                      <Text style={styles.textStyle}>{item.location.coordinates[1]}</Text>
                                                 </View>
                                                 <View style={styles.sectionStyle}>
                                                       <Text style={styles.textStyle}>Type:</Text>
                                                       <Text style={styles.textStyle}>{item.type}</Text>
+                                                </View>
+												<View style={styles.sectionStyle}>
+                                                      <Text style={styles.textStyle}>Sampling Type:</Text>
+                                                      <Text style={styles.textStyle}>{item.samplingType}</Text>
                                                 </View>
                                         </View>
                                 );
@@ -185,6 +151,11 @@ const styles = StyleSheet.create({
         width: '100%',
         flex:1
     },
+
+	winLogo: {
+		width: 20,
+		height: 20,
+	},
 
     pageHeading: {
 		fontSize: 25,
@@ -231,4 +202,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Schedules;
+
+export default SiteSurveyList;

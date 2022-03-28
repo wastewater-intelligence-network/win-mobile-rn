@@ -12,7 +12,9 @@ var Constants = {
         primary: "#756BDE",
         primaryDark: "#4e41d5",
         gray: "#d4d4d4",
-        grayColor: 'gray'
+        grayColor: 'gray',
+        black: 'black'
+
     },
     screenName: {
         SampleCollector: 'SampleCollector',
@@ -23,7 +25,8 @@ var Constants = {
         Home: 'Home',
         SiteSurvey: 'SiteSurvey',
         Inventory:'InventoryManagement',
-        Schedule: 'Schedules'
+        Schedule: 'Schedules',
+        SiteSurveyList: 'SiteSurveyList',
     },
     status: {
         sampleCollected: 'sample_collected',
