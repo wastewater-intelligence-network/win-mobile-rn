@@ -6,7 +6,8 @@ var Constants = {
         invalidSession: "Invalid session, Please try to login",
         error: "Error!!",
         invalidQRCode: "Invalid QR code scanned",
-        nodataFound: "No data found"
+        nodataFound: "No data found",
+        collectionAddedSuccessfully: "Collection point added successfully"
     },
     colors: {
         primary: "#756BDE",

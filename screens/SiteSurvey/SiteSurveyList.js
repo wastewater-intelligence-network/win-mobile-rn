@@ -49,7 +49,7 @@ const SiteSurveyList = ({ navigation }) => {
 		setDataLoaded(false)
 		sampleTracking.upgradeSurveyPointToCollectionPoint(jsonData.location.coordinates[0], jsonData.location.coordinates[1], jsonData.name, jsonData.pointId, jsonData.type, jsonData.samplingType, navigation)
 			.then(data => {
-                ToastAndroid.showWithGravity("Added Successful", ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+                ToastAndroid.showWithGravity(Constants.alertMessages.collectionAddedSuccessfully, ToastAndroid.SHORT, ToastAndroid.BOTTOM)
 				setDataLoaded(true);
 			})
 	}
