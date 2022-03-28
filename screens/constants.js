@@ -27,6 +27,7 @@ var Constants = {
         Inventory:'InventoryManagement',
         Schedule: 'Schedules',
         SiteSurveyList: 'SiteSurveyList',
+        collectionPoints: 'CollectionPoints',
     },
     status: {
         sampleCollected: 'sample_collected',

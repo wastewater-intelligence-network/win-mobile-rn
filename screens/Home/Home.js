@@ -97,6 +97,7 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(siteSurvey);
         filteredCollectionList.push(inventoryManagement);
         filteredCollectionList.push(siteSuveyList);
+        filteredCollectionList.push(mapView);
 
     };
 
@@ -157,6 +158,12 @@ export default function Home({navigation, route}) {
         "text": "Site survey List",
         "icon": ListIcon,
         "navigate": Constants.screenName.SiteSurveyList
+    }
+
+    const mapView = {
+        "text": "Collection\nPoints",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.collectionPoints
     }
 
 	const styles = StyleSheet.create({

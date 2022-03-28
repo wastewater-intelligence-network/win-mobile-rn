@@ -13,6 +13,7 @@ import Util from './screens/Util';
 import SiteSurvey from './screens/SiteSurvey/SiteSurvey';
 import Inventory from './screens/Inventory/Inventory';
 import SiteSurveyList from './screens/SiteSurvey/SiteSurveyList';
+import CollectionPoints from './screens/MapView/CollectionPoints';
 
 const Stack = createNativeStackNavigator();
 
@@ -74,7 +75,13 @@ export default function App() {
 					name={Constants.screenName.SiteSurveyList}
 					component={SiteSurveyList}
 					options={{headerShown: false}}
-				/> 
+				/>
+
+				<Stack.Screen
+					name={Constants.screenName.collectionPoints}
+					component={CollectionPoints}
+					options={{headerShown: false}}
+				/>
 
 			</Stack.Navigator>
 		</NavigationContainer>
