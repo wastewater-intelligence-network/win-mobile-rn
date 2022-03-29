@@ -24,21 +24,14 @@ export default function CollectionPointsModel({collectionRes}) {
                 <Text style={styles.textStyle}>{collectionRes.type}</Text>
             </View>
             <View style={styles.sectionStyle}>
-                <Text style={styles.textStyle}>Location:</Text>
-                <Text style={styles.textStyle}>{'lat '+collectionRes.location.coordinates[0] + ',long' + collectionRes.location.coordinates[0] }</Text>
-            </View>
-            {/* <View style={styles.sectionStyle}>
-                <Text style={styles.textStyle}>Type:</Text>
-                <Text style={styles.textStyle} >{labResponse.sample.sampleCollectionLocation.location.type}</Text>
+                <Text style={styles.textStyle}>Latitude:</Text>
+                <Text style={styles.textStyle}>{'   '+ collectionRes.location.coordinates[0]  }</Text>
             </View>
             <View style={styles.sectionStyle}>
-                <Text style={styles.textStyle}>Sample Collected:</Text>
-                <Text style={styles.textStyle}>{Util.showDateAndTime(labResponse.sample.statusLog, 0)}</Text>
+                <Text style={styles.textStyle}>Longitude:</Text>
+                <Text style={styles.textStyle}>{'   '+collectionRes.location.coordinates[1]  }</Text>
             </View>
-            <View style={styles.sectionStyle}>
-                <Text style={styles.textStyle}>Sample Transported:</Text>
-                <Text style={styles.textStyle}>{Util.showDateAndTime(labResponse.sample.statusLog, 1)}</Text>
-            </View> */}
+         
         </View>
     );
 };

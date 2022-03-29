@@ -44,8 +44,9 @@ export default function WinCustomAlert({
             <View style={{alignItems: 'center', margin: 20}}>
               {displayMode == 'success' ? (
                 <>
-                  {/* <Feather name="alert-triangle" size={30} color="black" /> */}
-                   <Icon name="checkmark-circle-outline" size={40} color="green" /> 
+                   { collectionPoints.name !== undefined ? <></> :
+                        <Icon name="checkmark-circle-outline" size={40} color="green" /> 
+                   }
                 </>
               ) : (
                 <>
@@ -53,13 +54,15 @@ export default function WinCustomAlert({
                    <Icon name="close-circle-outline" size={40} color="red" /> 
                 </>
               )}
-              <Text style={{fontSize: 20, marginTop: 8, color: Constants.colors.grayColor}}>{displayMsg}</Text>
+              {
+                collectionPoints.name !== undefined ? <></> :
+                   <Text style={{fontSize: 20, marginTop: 8, color: Constants.colors.grayColor}}>{displayMsg}</Text>
+              }
                 { labResponse.message === undefined ?
-                <Text></Text>
+                  collectionPoints.name !== undefined ? < CollectionPointsModel collectionRes={collectionPoints} /> : <></>
                   :
                   <View>
-                    {/* <LabDetails labResponse={labResponse}/> */}
-                     < CollectionPointsModel collectionRes={collectionRes} />
+                    <LabDetails labResponse={labResponse}/> 
                   </View>
                 }
 

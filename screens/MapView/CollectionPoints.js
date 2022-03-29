@@ -1,6 +1,5 @@
 
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, Image, Text } from "react-native";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import SampleTracking from '../../controllers/sample_tracking';
@@ -34,11 +33,23 @@ export default CollectionPoints = ({ route, navigation }) => {
   const [lat, setLat] = useState(0.0);
   const [long, setLong] = useState(0.0);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  let collectionPoint = {};
+  let collectionPoint1 = {};
+  const[collectionPoint, setCollectionPoint] = useState(undefined);
+
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    fetchCollectionPoints();
-  }, [])
+
+    if (isFirstRender.current) {
+      fetchCollectionPoints();
+      isFirstRender.current = false 
+      return;
+    }
+    //get the data
+    let firstObj = collectionPointList[0];
+    setLat(firstObj.location.coordinates[0]);
+    setLong(firstObj.location.coordinates[1]);
+  }, [collectionPointList])
 
 const fetchCollectionPoints = () => {
   var sampleTracking = new SampleTracking()
@@ -47,15 +58,6 @@ const fetchCollectionPoints = () => {
     .then(data => {
       setCollectionPointList(data);
       setDataLoaded(true);
-      let firstObj = collectionPointList[0];
-      console.log('first object=', firstObj);
-      console.log('got all data lenght', collectionPointList.length);
-      console.log('id of obj', firstObj._id);
-       let lat = firstObj.location.coordinates[0];
-       console.log('lat and long', lat )
-       console.log('long',firstObj.location.coordinates[1] )
-       setLat(firstObj.location.coordinates[0]);
-       setLong(firstObj.location.coordinates[1]);
     })
 }
 
@@ -78,14 +80,16 @@ const fetchCollectionPoints = () => {
     //filter data from list and display that in popup 
     let filterdata = collectionPointList.filter((item) => item._id == value.properties.id).map(({pointId, name, location,type }) => ({ pointId, name, location,type }));
 		let jsonData = filterdata[0];
-    collectionPoint = jsonData;
+    collectionPoint1 = jsonData;
     console.log('Filtered mapped data', jsonData);
+    console.log('collection poins', collectionPoint1);
+
+    setCollectionPoint(jsonData)
     setShowSuccessPopup(true);
     
   }
 
   const renderAnnotation = (counter) => {
-    //const calcoordinate = coordinates[counter];
     const collectionPoint = collectionPointList[counter];
     const co_ordinate = [collectionPoint.location.coordinates[0], collectionPoint.location.coordinates[1]]
     return (
@@ -128,6 +132,7 @@ const fetchCollectionPoints = () => {
 
   return (
     <View style={{flex: 1, height: "100%", width: "100%" }}>
+      
       { dataLoaded == true ?
       <MapboxGL.MapView
         styleURL={MapboxGL.StyleURL.Street}
@@ -149,11 +154,11 @@ const fetchCollectionPoints = () => {
 
         <WinCustomAlert
 						displayMode={'success'}
-						displayMsg={'Details'}
+						displayMsg={''}
 						visibility={showSuccessPopup}
 						dismissAlert={setShowSuccessPopup}
 						onPressHandler = {() => console.log('clciked')}
-						calculatedHeight = {route.name === Constants.screenName.SampleAcceptance ? 360:200}
+						calculatedHeight = {220}
             collectionPoints={collectionPoint}
 
 					/>

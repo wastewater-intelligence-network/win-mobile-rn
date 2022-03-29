@@ -196,7 +196,6 @@ export default function SampleCollector({ route, navigation }) {
 						{loading === true ? <ActivityIndicator size='large' /> : null}			   
 					</View> 
 
-
 					<WinCustomAlert
 						displayMode={'success'}
 						displayMsg={serverMessage}
