@@ -21,6 +21,10 @@ import TransporterIcon from '../../assets/delivery-man.png';
 import LabAcceptanceIcon from '../../assets/parcel.png';
 import LabTestIcon from '../../assets/medical-lab.png';
 import ListIcon from '../../assets/task-list.png';
+import InventoryIcon from '../../assets/inventory.png';
+import ScheduleIcon from '../../assets/schedule.png';
+import SurveyIcon from '../../assets/survey.png'
+import SiteSurvey from '../SiteSurvey/SiteSurvey';
 
 export default function Home({navigation, route}) {
 
@@ -91,12 +95,19 @@ export default function Home({navigation, route}) {
                 filteredCollectionList.push(technicianObj)
             } 
         }
+
         filteredCollectionList.push(listObj);
-        filteredCollectionList.push(siteSurvey);
-        filteredCollectionList.push(inventoryManagement);
-        filteredCollectionList.push(siteSuveyList);
         filteredCollectionList.push(mapView);
-        filteredCollectionList.push(schedules);
+
+        if(roleList.indexOf(Constants.userRoles.collector) !== -1) {
+            filteredCollectionList.push(inventoryManagement);
+            filteredCollectionList.push(schedules); 
+        }
+
+        if (roleList.indexOf(Constants.userRoles.admin) !== -1) {
+            filteredCollectionList.push(siteSurvey);
+            filteredCollectionList.push(siteSuveyList);
+        }
 
     };
 
@@ -143,24 +154,24 @@ export default function Home({navigation, route}) {
 
     const siteSurvey = {
         "text": "Site\nSurvey",
-        "icon": ListIcon,
+        "icon": SurveyIcon,
         "navigate": Constants.screenName.SiteSurvey
     }
 
     const inventoryManagement = {
         "text": "Inventory\nManagement",
-        "icon": ListIcon,
+        "icon": InventoryIcon,
         "navigate": Constants.screenName.Inventory
     }
 
     const siteSuveyList = {
         "text": "Site survey List",
-        "icon": ListIcon,
+        "icon": SurveyIcon,
         "navigate": Constants.screenName.SiteSurveyList
     }
     const schedules = {
         "text": "Schedules",
-        "icon": ListIcon,
+        "icon": ScheduleIcon,
         "navigate": Constants.screenName.Schedule
     }
 
