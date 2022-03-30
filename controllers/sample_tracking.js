@@ -153,6 +153,22 @@ export default class SampleTracking {
                     console.log(`response of sample point list =${res}`)
                     console.log(`${Constants.debugDesc.text} josn of sample point is =${JSON.stringify(res)}`)
                     resolve(res)
+
+                })
+                .catch(reject)
+        })
+    }
+
+    getSchedules  = (date, navigation) => {
+        return new Promise((resolve, reject) => {
+            Fetch('/getSchedule', {
+                method: 'GET'
+            }, navigation)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(`response of get schedules =${res.schedule}`)
+                    console.log(`${Constants.debugDesc.text} josn of samplelist is =${JSON.stringify(res.schedule)}`)
+                    resolve(res.schedule);
                 })
                 .catch(reject)
         })
@@ -172,6 +188,4 @@ export default class SampleTracking {
                 .catch(reject)
         })
     }
-
-    
 }

@@ -157,6 +157,11 @@ export default function Home({navigation, route}) {
         "icon": ListIcon,
         "navigate": Constants.screenName.SiteSurveyList
     }
+    const schedules = {
+        "text": "Schedules",
+        "icon": ListIcon,
+        "navigate": Constants.screenName.Schedule
+    }
 
     const mapView = {
         "text": "Collection\nPoints",
@@ -185,8 +190,8 @@ export default function Home({navigation, route}) {
             flexWrap: "wrap"
         },
         taskBox: {
-            width: "45%",
-            height: 140,
+            width: "30%",
+            height: 120,
             backgroundColor: "#eee",
             margin: 5,
             justifyContent: "center",
