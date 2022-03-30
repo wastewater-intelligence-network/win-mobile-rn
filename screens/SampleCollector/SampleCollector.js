@@ -165,7 +165,7 @@ export default function SampleCollector({ navigation }) {
       setScanned(true)
 	  let qrCode = (e.data).toUpperCase()
 	  setQrData(qrCode);
-	  if (Util.isValidQRScan(qrCode)) {
+	  if (Util.isValidQRScan(qrCode) && Constants.scanCharater.regEx.test(qrCode)) {		  
 		setReactiveQR(false);
 		setshowScanPopup(true);
 	//	toggleOverlay('sampleDataOverlay')
@@ -250,7 +250,7 @@ export default function SampleCollector({ navigation }) {
          	 <Overlay
 				 	style={styles.sampleDataOverlay}
 					isVisible={sampleDataOverlayVisible} 
-					onBackdropPress={() => {toggleOverlay('sampleDataOverlay'); setScanned(false)}}
+					onBackdropPress={() => {toggleOverlay('sampleDataOverlay'); resetQRScan();}}
 		       >
 					<Text style={styles.sampleDataHeading}>Additional Data</Text>
 					<Text style={{color: 'green',fontWeight:'500', alignSelf: 'center'}}>Scanned QR Code: {qrData}</Text>
