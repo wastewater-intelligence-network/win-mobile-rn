@@ -6,6 +6,7 @@ var Constants = {
         invalidSession: "Invalid session, Please try to login",
         error: "Error!!",
         invalidQRCode: "Invalid QR code scanned",
+        invalidQREntered: "Invalid QR code entered",
         nodataFound: "No data found",
         collectionAddedSuccessfully: "Collection point added successfully"
     },

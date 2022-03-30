@@ -10,7 +10,8 @@ import {
 	TextInput,
 	TouchableHighlight,
 	ToastAndroid,
-    PermissionsAndroid
+    PermissionsAndroid,
+	TouchableOpacity
 
 } from 'react-native';
 
@@ -56,6 +57,8 @@ export default function SampleCollector({ navigation }) {
 	const [reactiveQR, setReactiveQR] = useState(true);
 	const [scanner, setScanner] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [qrCodeManual,setQrCodeManual] = useState('');
+	const [showManualQR, setShowManualQR] = useState(false);
 	
 	let screenShotsPath = undefined;
 
@@ -76,7 +79,7 @@ export default function SampleCollector({ navigation }) {
 
     const handleSampleDataSubmit = (pointId) => {
     console.log(`${Constants.debugDesc.text} handle additional data with point id=${pointId}`);
-      
+    setShowManualQR(false);
       if(sampleDataOverlayVisible) {
         toggleOverlay('sampleDataOverlay')
       }
@@ -146,6 +149,24 @@ export default function SampleCollector({ navigation }) {
 		scanner.reactivate();
 		setScanned(false);
 		setReactiveQR(false);
+	}
+
+	const submitHandle = () => {
+		let qrCode = (qrCodeManual).toUpperCase()
+		setQrData(qrCode);
+		if (Util.isValidQRScan(qrCode) && Constants.scanCharater.regEx.test(qrCode)) {		  
+	 	toggleOverlay('sampleDataOverlay');
+		} else {
+		  ToastAndroid.showWithGravity(Constants.alertMessages.invalidQREntered, ToastAndroid.SHORT, ToastAndroid.BOTTOM)
+		  setQrCodeManual('');
+
+		}
+	}
+
+	const renderManualQRInputBox = () => {
+		setTimeout(function(){
+			setShowManualQR(true);
+		}, 3000);
 	}
     
     const getLocation = () => {
@@ -233,6 +254,7 @@ export default function SampleCollector({ navigation }) {
 
     useEffect(() => {
       requestLocationPermission();
+	  renderManualQRInputBox();
     }, []);
 
 
@@ -241,6 +263,28 @@ export default function SampleCollector({ navigation }) {
             <Text>Sample collector page {latitude}</Text>
             { locationAccessed == true ? <QRCodeScanner reactivate = {reactiveQR} onRead={scanned ? undefined : onSuccess} style={{ height: "100%", width: Dimensions.get('window').width}} ref={(node) => { setScanner(node) }}/>: undefined}
             { locationAccessed == true? <BarcodeMask width={300} height={300} showAnimatedLine={false} outerMaskOpacity={0.9}/>: undefined }
+            
+            { showManualQR === true ? 
+			<View style={{flexDirection: 'row', justifyContent:'space-between', marginBottom: 0, position:'relative'}}>
+				<TextInput
+					style={styles.inputBox}
+					height={40}
+					placeholder='QR Code'
+					onChangeText={setQrCodeManual}
+					selectionColor="#756BDE"
+					autoCapitalize='none'
+					value={qrCodeManual}
+					placeholderTextColor={Constants.colors.grayColor}
+				/>
+				<TouchableOpacity style={{backgroundColor:'#756BDE', width: 70, height: 40, borderRadius: 5}}
+					onPress= {() => submitHandle()}
+				>
+					<Text style={{alignSelf:'center', padding:10, color: '#ffff'}}>Submit</Text>
+				</TouchableOpacity>
+			</View>
+			:
+			<></>
+			}
 
           <Overlay isVisible={location === undefined}>
             <ActivityIndicator size="large" color="#0000ff" />
@@ -399,6 +443,18 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		padding: 15,
 		color: '#fff'
-	}
+	},
+	
+	inputBox: {
+		padding: 10,
+		backgroundColor: '#E6E8ED',
+		marginBottom: 40,
+		marginLeft: 40,
+		marginRight: 40,
+		color: Constants.colors.grayColor,
+		alignSelf: 'center',
+		flex: 6,
+		borderRadius: 5
+	},
 
 });
