@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, useRef } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, StyleSheet } from "react-native";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import SampleTracking from '../../controllers/sample_tracking';
 import Spinner from "../Spinner";
@@ -132,7 +132,7 @@ const fetchCollectionPoints = () => {
 
   return (
     <View style={{flex: 1, height: "100%", width: "100%" }}>
-      
+      <Text style={styles.pageHeading}>Collection Points</Text>	
       { dataLoaded == true ?
       <MapboxGL.MapView
         styleURL={MapboxGL.StyleURL.Street}
@@ -166,6 +166,21 @@ const fetchCollectionPoints = () => {
     </View>
   )
 }
+
+
+const styles = StyleSheet.create({
+  pageHeading: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10,
+    fontFamily: "Quicksand",
+    color: "#756BDE",
+    alignSelf: 'center'
+  }
+});
+
+
 
 
 
