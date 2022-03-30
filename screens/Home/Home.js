@@ -24,6 +24,9 @@ import ListIcon from '../../assets/task-list.png';
 import InventoryIcon from '../../assets/inventory.png';
 import ScheduleIcon from '../../assets/schedule.png';
 import SurveyIcon from '../../assets/survey.png'
+import MapListIcon from '../../assets/sampling_sites_map.png'
+import SurveyListIcon from '../../assets/survey_list.png'
+
 import SiteSurvey from '../SiteSurvey/SiteSurvey';
 
 export default function Home({navigation, route}) {
@@ -166,7 +169,7 @@ export default function Home({navigation, route}) {
 
     const siteSuveyList = {
         "text": "Site survey List",
-        "icon": SurveyIcon,
+        "icon": SurveyListIcon,
         "navigate": Constants.screenName.SiteSurveyList
     }
     const schedules = {
@@ -177,7 +180,7 @@ export default function Home({navigation, route}) {
 
     const mapView = {
         "text": "Collection\nPoints",
-        "icon": ListIcon,
+        "icon": MapListIcon,
         "navigate": Constants.screenName.collectionPoints
     }
 
