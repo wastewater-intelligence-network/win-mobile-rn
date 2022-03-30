@@ -6,7 +6,8 @@ var Constants = {
         invalidSession: "Invalid session, Please try to login",
         error: "Error!!",
         invalidQRCode: "Invalid QR code scanned",
-        nodataFound: "No data found"
+        nodataFound: "No data found",
+        collectionAddedSuccessfully: "Collection point added successfully"
     },
     colors: {
         primary: "#756BDE",
@@ -27,6 +28,7 @@ var Constants = {
         Inventory:'InventoryManagement',
         Schedule: 'Schedules',
         SiteSurveyList: 'SiteSurveyList',
+        collectionPoints: 'CollectionPoints',
     },
     status: {
         sampleCollected: 'sample_collected',
@@ -58,7 +60,8 @@ var Constants = {
     },
 
     scanCharater: {
-        length: 5
+        length: 5,
+        regEx: /^(?:[A-Za-z0-9]+)$/
     }
 }
 

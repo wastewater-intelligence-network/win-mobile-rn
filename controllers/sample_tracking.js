@@ -174,4 +174,18 @@ export default class SampleTracking {
         })
     }
 
+    getAllCollectionPoints = (date, navigation) => {
+        return new Promise((resolve, reject) => {
+            Fetch('/getCollectionPoints' , {
+                method: 'GET'
+            }, navigation)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(`response of all collection points =${res}`)
+                    console.log(`${Constants.debugDesc.text} josn of all collection points =${JSON.stringify(res)}`)
+                    resolve(res)
+                })
+                .catch(reject)
+        })
+    }
 }
