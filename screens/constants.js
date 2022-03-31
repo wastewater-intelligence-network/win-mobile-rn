@@ -14,8 +14,15 @@ var Constants = {
         primaryDark: "#4e41d5",
         gray: "#d4d4d4",
         grayColor: 'gray',
-        black: 'black'
+        black: 'black',
+        green: 'green',
 
+    },
+
+    samplingType: {
+        stp: 'STP',
+        sps: 'SPS',
+        manhole: 'Manhole'
     },
     screenName: {
         SampleCollector: 'SampleCollector',

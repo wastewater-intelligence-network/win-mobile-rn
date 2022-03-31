@@ -92,6 +92,15 @@ const fetchCollectionPoints = () => {
   const renderAnnotation = (counter) => {
     const collectionPoint = collectionPointList[counter];
     const co_ordinate = [collectionPoint.location.coordinates[0], collectionPoint.location.coordinates[1]]
+    var color = Constants.colors.green
+    if (collectionPoint.type === Constants.samplingType.stp) {
+        color = Constants.colors.green
+    } else if (collectionPoint.type === Constants.samplingType.sps) {
+      color = Constants.colors.primary
+    } else {
+      color = Constants.colors.black
+    }
+
     return (
 
       <MapboxGL.PointAnnotation
@@ -101,10 +110,11 @@ const fetchCollectionPoints = () => {
         coordinate={co_ordinate}
         onSelected = {(value) => getSpecifiedData(value)}
         >
+         
         <View style={{
                   height: 20, 
                   width: 20, 
-                  backgroundColor: 'red', 
+                  backgroundColor: color, 
                   borderRadius: 10, 
                   borderColor: '#fff', 
                   borderWidth: 3
