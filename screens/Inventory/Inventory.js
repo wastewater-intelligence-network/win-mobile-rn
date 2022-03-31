@@ -8,15 +8,36 @@ import {
     ScrollView
     } from 'react-native';
 import Button from '../components/Button';
+import SampleTracking from '../../controllers/sample_tracking';
 
 
 const Inventory = ({navigation}) => {
 
-    const [location, setLocation] = useState('');
-    const [area, setArea] = useState('');
-    const [temp, setTemp] = useState('');
+    const [PPE, setPPE] = useState('');
+    const [faceShield, setFaceShield] = useState('');
+    const [mask, setMask] = useState('');
+    const [pairOfGloves, setPairOfGloves] = useState('');
+    const [sanitiserBottles, setSanitiserBottles] = useState('');
+
+    const [iceBoxes, setIceBoxes] = useState('');
+    const [icePacks, setIcePacks] = useState('');
+    const [noOfBucket, setNoOfBucket] = useState('');
+    const [noOfCutter, setNoOfCutter] = useState('');
+    const [garbageBags, setGarbageBags] = useState('');
+    const [tissuesPapers, setTissuesPapers] = useState('');
+
+    const [ziplockBags, setZiplockBags] = useState('');
+    const [noOfBottles, setNoOfBottles] = useState('');
+    const [QRStickers, setQRStickers] = useState('');
+    const [noOfRopes, setNoOfRopes ] = useState('');
 
     let placeholderTextColor = "#d3d3d1";
+
+    const submitHandle = () => {
+        var sampleTracking = new SampleTracking();
+        sampleTracking.inventoryCollected(PPE, faceShield, mask, pairOfGloves, sanitiserBottles, iceBoxes, icePacks, noOfBucket
+            ,noOfCutter, garbageBags, tissuesPapers, ziplockBags, noOfBottles, QRStickers, noOfRopes, navigation);
+    }
 
     return(
         
@@ -33,8 +54,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="Aprons (PPE)"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={PPE}
+                                onChangeText={(ppe) => setPPE(ppe) }
                             />
                         </View>
                 </View>	
@@ -46,8 +67,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="face shields"
                                 placeholderTextColor={placeholderTextColor}
-                                value={area}
-                                onChangeText={(location) => setArea(area.substr(0, 15)) }
+                                value={faceShield}
+                                onChangeText={(val) => setFaceShield(val) }
                             />
                         </View>
                 </View>	
@@ -59,8 +80,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="masks"
                                 placeholderTextColor={placeholderTextColor}
-                                value={temp}
-                                onChangeText={(temp) => setTemp(temp.substr(0, 15)) }
+                                value={mask}
+                                onChangeText={(val) => setMask(val) }
                             />
                         </View>
                 </View>	
@@ -73,8 +94,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="Pair of gloves"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={pairOfGloves}
+                                onChangeText={(val) => setPairOfGloves(val) }
                             />
                         </View>
                 </View>
@@ -86,8 +107,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="sanitiser bottles"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={sanitiserBottles}
+                                onChangeText={(val) => setSanitiserBottles(val) }
                             />
                         </View>
                 </View>
@@ -103,8 +124,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="ice boxes"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={iceBoxes}
+                                onChangeText={(val) => setIceBoxes(val) }
                             />
                         </View>
                 </View>	
@@ -116,8 +137,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="ice packs"
                                 placeholderTextColor={placeholderTextColor}
-                                value={area}
-                                onChangeText={(location) => setArea(area.substr(0, 15)) }
+                                value={icePacks}
+                                onChangeText={(val) => setIcePacks(val) }
                             />
                         </View>
                 </View>	
@@ -129,8 +150,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="buckets"
                                 placeholderTextColor={placeholderTextColor}
-                                value={temp}
-                                onChangeText={(temp) => setTemp(temp.substr(0, 15)) }
+                                value={noOfBucket}
+                                onChangeText={(val) => setNoOfBucket(val) }
                             />
                         </View>
                 </View>	
@@ -143,8 +164,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="cutters"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={noOfCutter}
+                                onChangeText={(val) => setNoOfCutter(val) }
                             />
                         </View>
                 </View>
@@ -156,8 +177,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="garbage bags"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={garbageBags}
+                                onChangeText={(val) => setGarbageBags(val) }
                             />
                         </View>
                 </View>
@@ -169,8 +190,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="tissue papers"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={tissuesPapers}
+                                onChangeText={(val) => setTissuesPapers(val) }
                             />
                         </View>
                 </View>
@@ -186,8 +207,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="ziplock bags"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={ziplockBags}
+                                onChangeText={(val) => setZiplockBags(val) }
                             />
                         </View>
                 </View>	
@@ -199,8 +220,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="bottles"
                                 placeholderTextColor={placeholderTextColor}
-                                value={area}
-                                onChangeText={(location) => setArea(area.substr(0, 15)) }
+                                value={noOfBottles}
+                                onChangeText={(val) => setNoOfBottles(val) }
                             />
                         </View>
                 </View>	
@@ -212,8 +233,8 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="QR stickers"
                                 placeholderTextColor={placeholderTextColor}
-                                value={temp}
-                                onChangeText={(temp) => setTemp(temp.substr(0, 15)) }
+                                value={QRStickers}
+                                onChangeText={(val) => setQRStickers(val) }
                             />
                         </View>
                 </View>	
@@ -226,15 +247,15 @@ const Inventory = ({navigation}) => {
                                 style={styles.TextInput}
                                 placeholder="ropes"
                                 placeholderTextColor={placeholderTextColor}
-                                value={location}
-                                onChangeText={(location) => setLocation(location.substr(0, 15)) }
+                                value={noOfRopes}
+                                onChangeText={(val) => setNoOfRopes(val) }
                             />
                         </View>
                 </View>
 
              
                 <View style={{marginLeft: 20, marginRight:20, marginTop:50, height: 40}}>
-                        <Button onPress = {() => navigation.goBack()}>
+                        <Button onPress = {() => submitHandle()}>
                             Submit
                         </Button>
                  </View>

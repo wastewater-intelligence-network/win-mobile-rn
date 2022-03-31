@@ -188,4 +188,43 @@ export default class SampleTracking {
                 .catch(reject)
         })
     }
+
+    inventoryCollected = (PPE, faceShield, mask, pairOfGloves, sanitiserBottles, iceBoxes, icePacks, 
+        noOfBucket, noOfCutter, garbageBags, tissuesPapers, ziplockBags, noOfBottles, QRStickers, noOfRopes, navigation) => {
+            console.log(` in API key is noOfBucket = ${noOfBucket} noOfRopes=${noOfRopes} sanitizer bottle=${sanitiserBottles}`)
+
+
+       /* return new Promise((resolve, reject) => { 
+            var data = {
+                "containerId": containerId,
+                "location": {
+                    "type": "Point",
+                    "coordinates": [
+                        location.coords.longitude,
+                        location.coords.latitude
+                    ]
+                }
+            }
+
+            if(additionalData) {
+                data["additionalData"] = additionalData
+            }
+
+            if(pointId) {
+                console.log("PointId: " + pointId)
+                data["pointId"] = pointId
+            }
+
+            Fetch('/samplingRequest', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            }, navigation)
+                .then(res => res.json())
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(reject)
+        })*/
+    }
+
 }
