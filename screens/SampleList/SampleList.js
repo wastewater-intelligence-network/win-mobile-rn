@@ -133,13 +133,20 @@ export default function SampleList({ navigation }) {
 			var response = statusItem.message
 			var color = Constants.colors.gray
 			var date = undefined
+			let errorMessage = '';
 			if (i < statusList.length) {
-				var d = new Date(statusList[i].timestamp)
-				response = getStatusResponse(statusList[i].status).long
-				var date = d.getDate();
-				var month = d.getMonth();
-				date = <Text style={styles.detailedStatusDate}>{(date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (d.getHours() % 12 < 10 ?( '0' + d.getHours() % 12): d.getHours() % 12) + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes(): d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds(): d.getSeconds()) + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')}</Text>
-				color = '#3D7B3D'
+				var d = new Date(statusList[i].timestamp)				
+				 if(statusList[i].hasOwnProperty(Constants.statusLog.error)){
+					 errorMessage = statusList[i].message;
+					 color = 'red'
+				 } else {
+					 response = getStatusResponse(statusList[i].status).long
+					 var date = d.getDate();
+					 var month = d.getMonth();
+					 date = <Text style={styles.detailedStatusDate}>{(date < 10 ? '0' + date: date) + '/' + (month < 10 ? '0' + month: month) + '/' + d.getFullYear() + ' ' + (d.getHours() % 12 < 10 ?( '0' + d.getHours() % 12): d.getHours() % 12) + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes(): d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds(): d.getSeconds()) + ' ' + (d.getHours() < 12 ? 'AM' : 'PM')}</Text>
+					 color = '#3D7B3D'
+				 }
+				
 			}
 			res.push(
 				<View
@@ -152,8 +159,8 @@ export default function SampleList({ navigation }) {
 						marginVertical: 4
 					}}
 				>
-					<Text style={styles.detailedStatusText}>{response}</Text>
-					{date}
+					<Text style={styles.detailedStatusText}>{errorMessage.length > 0 ? errorMessage : response}</Text>
+					{errorMessage.length > 0 ? undefined: date}
 				</View>
 			)
 		})
