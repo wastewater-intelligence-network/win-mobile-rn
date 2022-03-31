@@ -63,6 +63,9 @@ var Constants = {
     scanCharater: {
         length: 5,
         regEx: /^(?:[A-Za-z0-9]+)$/
+    },
+    statusLog: {
+        error: 'error'
     }
 }
 
