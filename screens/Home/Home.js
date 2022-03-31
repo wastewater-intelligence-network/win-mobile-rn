@@ -103,8 +103,8 @@ export default function Home({navigation, route}) {
         filteredCollectionList.push(mapView);
 
         if(roleList.indexOf(Constants.userRoles.collector) !== -1) {
-            filteredCollectionList.push(inventoryManagement);
-            filteredCollectionList.push(schedules); 
+           // filteredCollectionList.push(inventoryManagement);
+           // filteredCollectionList.push(schedules); 
         }
 
         if (roleList.indexOf(Constants.userRoles.admin) !== -1) {
