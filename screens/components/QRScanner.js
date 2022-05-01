@@ -47,7 +47,14 @@ const QRScanner = forwardRef((props, ref) => {
 			data = qrValue;
 		}
 		if (defaultIsValid(data)) {
-			setValidateQrPopupVisibility(true);
+			if (
+				props.isConfirmationNeeded !== undefined &&
+				props.isConfirmationNeeded === true
+			) {
+				setValidateQrPopupVisibility(true);
+			} else {
+				props.onRead(data);
+			}
 		} else {
 			setShowErrPopup(true);
 		}
@@ -56,6 +63,7 @@ const QRScanner = forwardRef((props, ref) => {
 	const preprocess = async data => {
 		data = data.toUpperCase();
 		setQrValue(data);
+		return data;
 	};
 
 	return (
@@ -63,8 +71,8 @@ const QRScanner = forwardRef((props, ref) => {
 			<QRCodeScanner
 				reactivate={false}
 				onRead={async e => {
-					await preprocess(e.data);
-					validate(e.data);
+					let data = await preprocess(e.data);
+					validate(data);
 				}}
 				style={{
 					height: '100%',
