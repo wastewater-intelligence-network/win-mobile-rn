@@ -99,7 +99,7 @@ export default function WinCustomAlert({
 									<></>
 								)
 							) : (
-								<View>
+								<View style={{ height: 200 }}>
 									<LabDetails labResponse={labResponse} />
 								</View>
 							)}
