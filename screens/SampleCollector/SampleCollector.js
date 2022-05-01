@@ -279,6 +279,7 @@ export default function SampleCollector({ navigation }) {
 						toggleOverlay('sampleDataOverlay');
 						setQrData(data);
 					}}
+					isConfirmationNeeded={true}
 					ref={scannerRef}
 				/>
 			) : undefined}
