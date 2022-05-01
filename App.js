@@ -15,82 +15,97 @@ import Inventory from './screens/Inventory/Inventory';
 import SiteSurveyList from './screens/SiteSurvey/SiteSurveyList';
 import CollectionPoints from './screens/MapView/CollectionPoints';
 import Schedules from './screens/Schedules/Schedules';
+import ChooseLocale from './screens/ChooseLocale/ChooseLocale';
+
+import I18n from './i18n/i18n';
+import en from './i18n/en';
+import hi from './i18n/hi';
+import gj from './i18n/gj';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+	I18n.translations = {
+		en: en,
+		hi: hi,
+		gj: gj,
+	};
 
 	useEffect(() => {
 		SplashScreen.hide();
-	  }, []);
-	
+	}, []);
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
 				<Stack.Screen
 					name="Login"
 					component={Login}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name="Home"
 					component={Home}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name={Constants.screenName.SampleCollector}
 					component={SampleCollector}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen
 					name={Constants.screenName.SampleTransporter}
 					component={SampleTransporter}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
 					name={Constants.screenName.SampleAcceptance}
 					component={SampleTransporter}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
-				
+
 				<Stack.Screen
 					name={Constants.screenName.SamplesList}
 					component={SampleList}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen
 					name={Constants.screenName.SiteSurvey}
 					component={SiteSurvey}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen
 					name={Constants.screenName.Inventory}
 					component={Inventory}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
-				 <Stack.Screen
+				<Stack.Screen
 					name={Constants.screenName.SiteSurveyList}
 					component={SiteSurveyList}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen
 					name={Constants.screenName.collectionPoints}
 					component={CollectionPoints}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
 				<Stack.Screen
 					name={Constants.screenName.Schedule}
 					component={Schedules}
-					options={{headerShown: false}}
+					options={{ headerShown: false }}
 				/>
 
-
+				<Stack.Screen
+					name={Constants.screenName.ChooseLocale}
+					component={ChooseLocale}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

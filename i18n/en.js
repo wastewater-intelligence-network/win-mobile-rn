@@ -1,0 +1,15 @@
+export default {
+	sample_collection: 'Sample Collection',
+	sample_transport: 'Sample\nTransportation',
+	sample_accept: 'Accept\nSample',
+	site_survey: 'Site\nSurvey',
+	site_survey_list: 'Site Survey List',
+	sample_list: 'Samples\nList',
+	collection_point: 'Collection\nPoints',
+	inventory_management: 'Inventory\nManagement',
+	schedules: 'Schedules',
+	sampling_status: 'Sampling Status',
+	list_of_tasks: 'HERE IS A LIST OF TASKS YOU CAN DO ON THE APP',
+	switch_language: 'Switch Language',
+	sign_out: 'Sign Out',
+};

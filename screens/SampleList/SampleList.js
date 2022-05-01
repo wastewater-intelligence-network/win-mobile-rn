@@ -29,6 +29,7 @@ import SampleInTransitIcon from '../../assets/transition.png';
 import SampleInLabIcon from '../../assets/sample_accepted.png';
 import Util from '../Util';
 import Spinner from '../Spinner';
+import I18n from '../../i18n/i18n';
 
 export default function SampleList({ navigation }) {
 	const [sampleList, setSampleList] = useState([]);
@@ -264,7 +265,7 @@ export default function SampleList({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.pageHeading}>Sampling Status</Text>
+			<Text style={styles.pageHeading}>{I18n.t('sampling_status')}</Text>
 			<Text style={styles.dateStyle}>{Util.getFormatedDate(date)}</Text>
 			<TouchableOpacity onPress={() => setOpen(true)}>
 				<Text style={styles.chooseDateStyle}>--- Select Date ---</Text>

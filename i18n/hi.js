@@ -1,0 +1,15 @@
+export default {
+	sample_collection: 'नमूना ले',
+	sample_transport: 'नमूना परिवहन',
+	sample_accept: 'नमूना\nस्वीकार करें',
+	site_survey: 'साइट सर्वेक्षण',
+	site_survey_list: 'साइट सर्वेक्षण सूची',
+	sample_list: 'नमूने सूची',
+	collection_point: 'नमूना लेने की जगह',
+	inventory_management: 'सूची प्रबंधन',
+	schedules: 'अनुसूचियों',
+	sampling_status: 'नमूना स्थिति',
+	list_of_tasks: 'यहां उन कार्यों की सूची दी गई है जो आप ऐप पर कर सकते हैं',
+	switch_language: 'भाषा बदलें',
+	sign_out: 'साइन आउट',
+};

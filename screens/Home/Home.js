@@ -15,6 +15,7 @@ import Constants from '../constants';
 import Realm from 'realm';
 import Util from '../Util';
 import DBManager from '../DBManager';
+import I18n from '../../i18n/i18n';
 
 import SampleCollectionIcon from '../../assets/safety-suit.png';
 import TransporterIcon from '../../assets/delivery-man.png';
@@ -33,12 +34,16 @@ export default function Home({ navigation, route }) {
 	const [userRole, setUserRole] = useState('');
 	const [rol, setRol] = useState();
 	const [finalRoles, setFinalRoles] = useState();
+	const [locale, setLocale] = useState('en');
 
-	let filteredCollectionList = [];
 	let finalFilterArray = { collector: [collectorObj] };
 
 	useEffect(() => {
-		setFinalRoles(filteredCollectionList);
+		// forceUpdate();
+		console.log('Parent: ' + locale);
+	}, [locale]);
+
+	useEffect(() => {
 		saveInDB();
 		const backAction = () => {
 			if (navigation.isFocused()) {
@@ -57,68 +62,44 @@ export default function Home({ navigation, route }) {
 		DBManager.saveRoles(route.params);
 	};
 
-	const inititealization = () => {
-		makeFilterList();
-	};
+	// const inititealization = () => {
+	// 	makeFilterList();
+	// };
 
-	const makeFilterList = () => {
-		// set roles from navigation
+	const getRoles = () => {
+		let roles = {};
+
+		roles['common'] = [listObj, mapView];
+		roles[Constants.userRoles.collector] = [
+			collectorObj,
+			inventoryManagement,
+			schedules,
+		];
+		roles[Constants.userRoles.transporter] = [transporterObj];
+		roles[Constants.userRoles.technician] = [technicianObj];
+		roles[Constants.userRoles.admin] = [
+			collectorObj,
+			inventoryManagement,
+			schedules,
+			transporterObj,
+			technicianObj,
+			siteSurvey,
+			siteSuveyList,
+		];
+
 		let roleList = route.params;
 		if (roleList === undefined) {
 			return;
 		}
 
-		if (roleList.indexOf(Constants.userRoles.collector) !== -1) {
-			filteredCollectionList.push(collectorObj);
-		}
+		let tempRoleList = [];
+		roleList.forEach(role => {
+			tempRoleList.push(...roles[role]);
+		});
 
-		if (roleList.indexOf(Constants.userRoles.transporter) !== -1) {
-			filteredCollectionList.push(transporterObj);
-		}
+		tempRoleList.push(...roles['common']);
 
-		if (roleList.indexOf(Constants.userRoles.technician) !== -1) {
-			filteredCollectionList.push(technicianObj);
-		}
-
-		if (roleList.indexOf(Constants.userRoles.admin) !== -1) {
-			let checkUserRoles = [];
-			for (var index in filteredCollectionList) {
-				let object = filteredCollectionList[index];
-				checkUserRoles.push(object.text);
-			}
-			//check what roles it contains
-			if (
-				!(
-					checkUserRoles.indexOf(
-						Constants.homeMenuTitle.transporter,
-					) !== -1
-				)
-			) {
-				filteredCollectionList.push(transporterObj);
-			}
-			if (
-				!(
-					checkUserRoles.indexOf(
-						Constants.homeMenuTitle.technician,
-					) !== -1
-				)
-			) {
-				filteredCollectionList.push(technicianObj);
-			}
-		}
-
-		filteredCollectionList.push(listObj);
-		filteredCollectionList.push(mapView);
-
-		if (roleList.indexOf(Constants.userRoles.collector) !== -1) {
-			filteredCollectionList.push(inventoryManagement);
-			filteredCollectionList.push(schedules);
-		}
-
-		if (roleList.indexOf(Constants.userRoles.admin) !== -1) {
-			filteredCollectionList.push(siteSurvey);
-			filteredCollectionList.push(siteSuveyList);
-		}
+		return new Set(tempRoleList);
 	};
 
 	const signoutHandler = () => {
@@ -135,104 +116,57 @@ export default function Home({ navigation, route }) {
 	};
 
 	const collectorObj = {
-		text: 'Sample\nCollection',
+		text: I18n.t('sample_collection'),
 		icon: SampleCollectionIcon,
 		navigate: Constants.screenName.SampleCollector,
 	};
 
 	const transporterObj = {
-		text: 'Sample\nTransportation',
+		text: I18n.t('sample_transport'),
 		icon: TransporterIcon,
 		navigate: Constants.screenName.SampleTransporter,
 	};
 
 	const technicianObj = {
-		text: 'Accept\nSample',
+		text: I18n.t('sample_accept'),
 		icon: LabAcceptanceIcon,
 		navigate: Constants.screenName.SampleAcceptance,
 	};
 
 	const listObj = {
-		text: 'Samples\nList',
+		text: I18n.t('sample_list'),
 		icon: ListIcon,
 		navigate: Constants.screenName.SamplesList,
 	};
 
 	const siteSurvey = {
-		text: 'Site\nSurvey',
+		text: I18n.t('site_survey'),
 		icon: SurveyIcon,
 		navigate: Constants.screenName.SiteSurvey,
 	};
 
 	const inventoryManagement = {
-		text: 'Inventory\nManagement',
+		text: I18n.t('inventory_management'),
 		icon: InventoryIcon,
 		navigate: Constants.screenName.Inventory,
 	};
 
 	const siteSuveyList = {
-		text: 'Site Survey List',
+		text: I18n.t('site_survey_list'),
 		icon: SurveyListIcon,
 		navigate: Constants.screenName.SiteSurveyList,
 	};
 	const schedules = {
-		text: 'Schedules',
+		text: I18n.t('schedules'),
 		icon: ScheduleIcon,
 		navigate: Constants.screenName.Schedule,
 	};
 
 	const mapView = {
-		text: 'Collection\nPoints',
+		text: I18n.t('collection_point'),
 		icon: MapListIcon,
 		navigate: Constants.screenName.collectionPoints,
 	};
-
-	const styles = StyleSheet.create({
-		container: {
-			flex: 1,
-			padding: 27,
-			backgroundColor: '#fff',
-			alignItems: 'center',
-			justifyContent: 'center',
-			fontFamily: 'Quicksand',
-		},
-		listTaskMessage: {
-			fontSize: 25,
-			textAlign: 'center',
-			color: Constants.colors.primary,
-		},
-		taskBoxContainer: {
-			flexDirection: 'row',
-			justifyContent: 'center',
-			marginTop: 30,
-			flexWrap: 'wrap',
-		},
-		taskBox: {
-			width: '30%',
-			height: 120,
-			backgroundColor: '#eee',
-			margin: 5,
-			justifyContent: 'center',
-			alignItems: 'center',
-			borderRadius: 3,
-		},
-		taskImage: {
-			width: 50,
-			height: 50,
-		},
-		taskText: {
-			fontSize: 14,
-			paddingTop: 5,
-			textAlign: 'center',
-			fontWeight: 'bold',
-			color: Constants.colors.grayColor,
-		},
-		signout: {
-			marginTop: 60,
-			fontSize: 15,
-			color: Constants.colors.grayColor,
-		},
-	});
 
 	const renderFinalTaskBoxes = () => {
 		var view = [];
@@ -240,17 +174,18 @@ export default function Home({ navigation, route }) {
 		//     console.log(`count under rednder final boxes=${filteredCollectionList.length}`);
 		//     return
 		// }
-		if (finalRoles === undefined) {
+
+		let rolesObjectList = getRoles();
+
+		if (rolesObjectList === undefined) {
 			console.log('object not defined yet');
 			return;
 		}
 
-		for (var index in finalRoles) {
-			let role = finalRoles[index];
-			console.log(`name wise=${role.text}`);
+		rolesObjectList.forEach((role, idx) => {
 			view.push(
 				<TouchableHighlight
-					key={10 * index + index}
+					key={idx}
 					style={styles.taskBox}
 					underlayColor="#ddd"
 					onPress={() => {
@@ -266,53 +201,92 @@ export default function Home({ navigation, route }) {
 					</>
 				</TouchableHighlight>,
 			);
-		}
-		return view;
-	};
-
-	const renderTaskBoxes = () => {
-		var view = [];
-		if (rol === undefined) {
-			return;
-		}
-
-		Object.keys(rol).forEach((role, idx) => {
-			rol[role].forEach((r, rIdx) => {
-				view.push(
-					<TouchableHighlight
-						key={10 * idx + rIdx}
-						style={styles.taskBox}
-						underlayColor="#ddd"
-						onPress={() => {
-							navigation.navigate(r.navigate);
-						}}>
-						<>
-							<Image source={r.icon} style={styles.taskImage} />
-							<Text
-								style={styles.taskText}
-								textBreakStrategy="balanced">
-								{r.text}
-							</Text>
-						</>
-					</TouchableHighlight>,
-				);
-			});
 		});
 		return view;
 	};
 
 	return (
 		<View style={styles.container}>
-			{inititealization()}
 			<Text style={styles.listTaskMessage}>
-				HERE IS A LIST OF TASKS YOU CAN DO ON THE APP
+				{I18n.t('list_of_tasks')}
 			</Text>
 			<View style={styles.taskBoxContainer}>
 				{renderFinalTaskBoxes()}
 			</View>
-			<TouchableOpacity onPress={signoutHandler}>
-				<Text style={styles.signout}>Sign Out</Text>
-			</TouchableOpacity>
+			<View style={styles.buttonContainer}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() => {
+						navigation.navigate(Constants.screenName.ChooseLocale, {
+							setLocaleFunc: setLocale,
+						});
+					}}>
+					<Text style={styles.buttonText}>
+						{I18n.t('switch_language')}
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={signoutHandler}
+					style={styles.button}>
+					<Text style={styles.buttonText}>{I18n.t('sign_out')}</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 27,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+		fontFamily: 'Quicksand',
+	},
+	listTaskMessage: {
+		fontSize: 25,
+		textAlign: 'center',
+		color: Constants.colors.primary,
+	},
+	taskBoxContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		marginTop: 30,
+		flexWrap: 'wrap',
+	},
+	taskBox: {
+		width: '30%',
+		height: 120,
+		backgroundColor: '#eee',
+		margin: 5,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 3,
+	},
+	taskImage: {
+		width: 50,
+		height: 50,
+	},
+	taskText: {
+		fontSize: 14,
+		paddingTop: 5,
+		textAlign: 'center',
+		fontWeight: 'bold',
+		color: Constants.colors.black,
+	},
+	buttonContainer: {
+		marginTop: 50,
+	},
+	button: {
+		backgroundColor: Constants.colors.primaryDark,
+		marginVertical: 6,
+		borderRadius: 7,
+	},
+	buttonText: {
+		color: '#fff',
+		fontSize: 15,
+		textAlign: 'center',
+		padding: 10,
+	},
+});
