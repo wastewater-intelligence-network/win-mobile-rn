@@ -192,6 +192,14 @@ export default function SampleList({ navigation }) {
 		return res;
 	};
 
+	const renderData = (data, field) => {
+		if (data === undefined) {
+			return 'NA';
+		} else {
+			return data[field];
+		}
+	};
+
 	const renderBody = item => {
 		return (
 			<View style={styles.accordionBody}>
@@ -216,6 +224,28 @@ export default function SampleList({ navigation }) {
 				})}
 				<View style={styles.accordionBodyStatusContainer}>
 					{renderDetailedStatus(item.statusLog)}
+				</View>
+				<View style={styles.accordionBodyDataContainer}>
+					<View>
+						<Text style={styles.accordionBodyDataHeader}>
+							pH Value
+						</Text>
+						<Text>{renderData(item.additionalData, 'ph')}</Text>
+					</View>
+					<View>
+						<Text style={styles.accordionBodyDataHeader}>
+							Temp (°C)
+						</Text>
+						<Text>
+							{renderData(item.additionalData, 'temperature')}
+						</Text>
+					</View>
+					<View>
+						<Text style={styles.accordionBodyDataHeader}>
+							Inflow (MLD)
+						</Text>
+						<Text>{renderData(item.additionalData, 'inflow')}</Text>
+					</View>
 				</View>
 			</View>
 		);
@@ -391,6 +421,17 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		fontFamily: 'Quicksand',
 		color: Constants.colors.grayColor,
+	},
+	accordionBodyDataContainer: {
+		marginTop: 10,
+		paddingTop: 10,
+		borderTopWidth: 1,
+		borderColor: '#a1a1a1',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	accordionBodyDataHeader: {
+		fontWeight: '800',
 	},
 	dateStyle: {
 		marginTop: -2,
