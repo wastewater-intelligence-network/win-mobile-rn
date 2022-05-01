@@ -22,6 +22,7 @@ import SampleTracking from '../../controllers/sample_tracking';
 import WinCustomAlert from '../WinCustomAlert';
 import Util from '../Util';
 import Spinner from '../Spinner';
+import QRScanner from '../components/QRScanner';
 
 export default function SampleCollector({ route, navigation }) {
 	const [hasPermission, setHasPermission] = useState(null);
@@ -34,6 +35,7 @@ export default function SampleCollector({ route, navigation }) {
 	const [serverMessage, setServerMessage] = useState('');
 	const [labJsonResponse, setLabJsonResponse] = useState({});
 	const [loading, setLoading] = useState(false);
+	const scannerRef = useRef();
 
 	const requestCameraPermission = async () => {
 		try {
@@ -153,37 +155,16 @@ export default function SampleCollector({ route, navigation }) {
 			.catch(console.log);
 	};
 
-	const configureScan = () => {
-		setScanned(false);
-		setReactiveQR(false);
-		setTimeout(function () {
-			scanner.reactivate();
-		}, 3000);
+	const resetScan = () => {
+		scannerRef.current.reset();
 	};
 
-	onSuccess = e => {
-		console.log(`capture data=${e.data}`);
-		setScanned(true);
-		let qrCode = e.data.toUpperCase();
-		setQrData(qrCode);
-		setReactiveQR(false);
-
-		if (Util.isValidQRScan(qrCode)) {
-			let sampleTracking = new SampleTracking();
-			if (route.name === Constants.screenName.SampleTransporter) {
-				updateStatusToInTransit(sampleTracking, qrCode);
-			} else if (route.name === Constants.screenName.SampleAcceptance) {
-				updateStatusToAccepted(sampleTracking, qrCode);
-			}
-		} else {
-			// setServerMessage(Constants.alertMessages.invalidQRCode)
-			// setShowErrPopup(true);
-			ToastAndroid.showWithGravity(
-				Constants.alertMessages.invalidQRCode,
-				ToastAndroid.SHORT,
-				ToastAndroid.BOTTOM,
-			);
-			configureScan();
+	const onQRScan = data => {
+		let sampleTracking = new SampleTracking();
+		if (route.name === Constants.screenName.SampleTransporter) {
+			updateStatusToInTransit(sampleTracking, data);
+		} else if (route.name === Constants.screenName.SampleAcceptance) {
+			updateStatusToAccepted(sampleTracking, data);
 		}
 	};
 
@@ -191,7 +172,13 @@ export default function SampleCollector({ route, navigation }) {
 	return (
 		<View style={styles.container}>
 			<View style={{ flex: 1, backgroundColor: 'black' }}>
-				<QRCodeScanner
+				<QRScanner
+					onRead={data => {
+						onQRScan(data);
+					}}
+					ref={scannerRef}
+				/>
+				{/* <QRCodeScanner
 					reactivate={reactiveQR}
 					onRead={scanned ? undefined : onSuccess}
 					style={{
@@ -207,29 +194,24 @@ export default function SampleCollector({ route, navigation }) {
 					height={300}
 					showAnimatedLine={false}
 					outerMaskOpacity={0.9}
-				/>
+				/> */}
 				{loading === true ? <ActivityIndicator size="large" /> : null}
 			</View>
 
 			<WinCustomAlert
 				displayMode={'success'}
-				displayMsg={serverMessage}
+				displayTitle={serverMessage}
 				visibility={showSuccessPopup}
 				dismissAlert={setShowSuccessPopup}
-				onPressHandler={() => configureScan()}
-				calculatedHeight={
-					route.name === Constants.screenName.SampleAcceptance
-						? 360
-						: 200
-				}
+				onPressHandler={() => resetScan()}
 				labResponse={labJsonResponse}
 			/>
 			<WinCustomAlert
 				displayMode={'failed'}
-				displayMsg={serverMessage}
+				displayTitle={serverMessage}
 				visibility={showErrPopup}
 				dismissAlert={setShowErrPopup}
-				onPressHandler={() => configureScan()}
+				onPressHandler={() => resetScan()}
 			/>
 		</View>
 	);
