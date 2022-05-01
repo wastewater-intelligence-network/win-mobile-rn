@@ -171,7 +171,7 @@ export default function Home({ navigation, route }) {
 	};
 
 	const siteSuveyList = {
-		text: 'Site survey List',
+		text: 'Site Survey List',
 		icon: SurveyListIcon,
 		navigate: Constants.screenName.SiteSurveyList,
 	};
