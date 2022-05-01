@@ -277,7 +277,7 @@ export default function SampleCollector({ navigation }) {
 				<QRScanner
 					onRead={data => {
 						toggleOverlay('sampleDataOverlay');
-						console.log(data);
+						setQrData(data);
 					}}
 					ref={scannerRef}
 				/>
@@ -421,14 +421,14 @@ export default function SampleCollector({ navigation }) {
 
 			<WinCustomAlert
 				displayMode={'success'}
-				displayMsg={serverMessage}
+				displayTitle={serverMessage}
 				visibility={showSuccessPopup}
 				dismissAlert={setShowSuccessPopup}
 				onPressHandler={() => saveToDB()}
 			/>
 			<WinCustomAlert
 				displayMode={'failed'}
-				displayMsg={serverMessage}
+				displayTitle={serverMessage}
 				visibility={showErrPopup}
 				dismissAlert={setShowErrPopup}
 				onPressHandler={() => errorAction()}

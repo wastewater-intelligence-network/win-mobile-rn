@@ -7,11 +7,12 @@ import CollectionPointsModel from './CollectionPointsModel';
 
 export default function WinCustomAlert({
 	displayMode,
+	displayTitle,
 	displayMsg,
 	visibility,
 	dismissAlert,
 	onPressHandler,
-	calculatedHeight = 200,
+	calculatedHeight = 240,
 	labResponse = {},
 	collectionPoints = {},
 }) {
@@ -32,7 +33,7 @@ export default function WinCustomAlert({
 						style={{
 							alignItems: 'center',
 							backgroundColor: 'white',
-							height: calculatedHeight,
+							height: 'auto',
 							width: '90%',
 							borderWidth: 1,
 							borderColor: '#fff',
@@ -47,7 +48,7 @@ export default function WinCustomAlert({
 									) : (
 										<Icon
 											name="checkmark-circle-outline"
-											size={40}
+											size={60}
 											color="green"
 										/>
 									)}
@@ -57,7 +58,7 @@ export default function WinCustomAlert({
 									{/* <Feather name="alert-triangle" size={30} color="red" /> */}
 									<Icon
 										name="close-circle-outline"
-										size={40}
+										size={60}
 										color="red"
 									/>
 								</>
@@ -65,14 +66,29 @@ export default function WinCustomAlert({
 							{collectionPoints.name !== undefined ? (
 								<></>
 							) : (
-								<Text
-									style={{
-										fontSize: 20,
-										marginTop: 8,
-										color: Constants.colors.black,
-									}}>
-									{displayMsg}
-								</Text>
+								<>
+									<Text
+										style={{
+											fontSize: 19,
+											marginTop: 8,
+											textAlign: 'center',
+											color: Constants.colors.black,
+										}}>
+										{displayTitle}
+									</Text>
+									{displayMsg !== undefined ? (
+										<Text
+											style={{
+												fontSize: 16,
+												marginTop: 8,
+												textAlign: 'center',
+												color: Constants.colors.black,
+												height: 'auto',
+											}}>
+											{displayMsg}
+										</Text>
+									) : undefined}
+								</>
 							)}
 							{labResponse.message === undefined ? (
 								collectionPoints.name !== undefined ? (
@@ -100,7 +116,6 @@ export default function WinCustomAlert({
 								borderRadius: 0,
 								alignItems: 'center',
 								justifyContent: 'center',
-								position: 'absolute',
 								backgroundColor: '#756BDE',
 								borderColor: '#ddd',
 								borderBottomWidth: 0,

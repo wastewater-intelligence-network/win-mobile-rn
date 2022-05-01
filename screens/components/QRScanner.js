@@ -136,7 +136,10 @@ const QRScanner = forwardRef((props, ref) => {
 			/>
 			<WinCustomAlert
 				displayMode={'failed'}
-				displayMsg={'Invalid QR Code'}
+				displayTitle={'Invalid QR Code'}
+				displayMsg={
+					'QR code is of length 5 and only alphanumeric characters.'
+				}
 				visibility={showErrPopup}
 				dismissAlert={setShowErrPopup}
 				onPressHandler={() => {
