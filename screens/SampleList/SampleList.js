@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '90%',
 		padding: 0,
+		paddingBottom: 65,
 	},
 	accordionList: {
 		marginBottom: 105,

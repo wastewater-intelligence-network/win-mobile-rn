@@ -12,6 +12,8 @@ import {
 	ToastAndroid,
 	PermissionsAndroid,
 	TouchableOpacity,
+	AppState,
+	ScrollView,
 } from 'react-native';
 
 //Location and bar code scnner package will come here
@@ -185,13 +187,24 @@ export default function SampleCollector({ navigation }) {
 	};
 
 	const getLocation = () => {
-		Geolocation.getCurrentPosition(data => {
-			console.log(`get location long=${data.coords.longitude}`);
-			console.log(`get location lat=${data.coords.latitude}`);
-			setLatitude(data.coords.latitude);
-			setLocation(data);
-			setLocationAccessed(true);
-		});
+		Geolocation.getCurrentPosition(
+			data => {
+				console.log(`get location long=${data.coords.longitude}`);
+				console.log(`get location lat=${data.coords.latitude}`);
+				setLatitude(data.coords.latitude);
+				setLocation(data);
+				setLocationAccessed(true);
+			},
+			error => {
+				console.log(error);
+				setLocation(false);
+				setLocationAccessed(true);
+			},
+			{
+				timeout: 6000,
+				maximumAge: 10000,
+			},
+		);
 	};
 
 	onSuccess = e => {
@@ -265,13 +278,18 @@ export default function SampleCollector({ navigation }) {
 		}
 	};
 
+	const handleAppStateChange = nextAppState => {
+		// if(nextAppState )
+	};
+
 	useEffect(() => {
 		requestLocationPermission();
+		AppState.addEventListener('change', handleAppStateChange);
 		// renderManualQRInputBox();
 	}, []);
 
 	return (
-		<View style={{ flex: 1, backgroundColor: 'black' }}>
+		<View style={{ flex: 1, backgroundColor: 'black', height: '100%' }}>
 			{/* <Text>Sample collector page {latitude}</Text> */}
 			{locationAccessed == true ? (
 				<QRScanner
@@ -408,8 +426,14 @@ export default function SampleCollector({ navigation }) {
 			</Overlay>
 
 			<Overlay
-				style={styles.sampleDataOverlay}
+				overlayStyle={{
+					margin: 30,
+					padding: 20,
+					flexDirection: 'column',
+					justifyContent: 'center',
+				}}
 				isVisible={listOverlayVisible}
+				windowBackgroundColor="#000"
 				onBackdropPress={() => {
 					toggleOverlay('listOverlay');
 					setScanned(false);
@@ -417,7 +441,9 @@ export default function SampleCollector({ navigation }) {
 				<Text style={styles.pointListHeading}>
 					Multiple collection points nearby. Please pick one
 				</Text>
-				{renderCollectionPointList()}
+				<View style={styles.samplingPointListScroll}>
+					<ScrollView>{renderCollectionPointList()}</ScrollView>
+				</View>
 			</Overlay>
 
 			<WinCustomAlert
@@ -480,6 +506,10 @@ const styles = StyleSheet.create({
 	sampleDataOverlay: {
 		padding: 20,
 	},
+	samplingPointListScroll: {
+		height: '80%',
+		marginVertical: 10,
+	},
 	sampleDataHeading: {
 		fontSize: 20,
 		paddingHorizontal: 30,
@@ -504,12 +534,12 @@ const styles = StyleSheet.create({
 	},
 	pointListHeading: {
 		fontSize: 18,
+		color: Constants.colors.black,
 		fontWeight: 'bold',
 		marginVertical: 10,
-		color: Constants.colors.grayColor,
 	},
 	pointListItemContainer: {
-		backgroundColor: Constants.colors.primary,
+		backgroundColor: Constants.colors.primaryDark,
 		marginVertical: 10,
 	},
 	pointListItem: {
