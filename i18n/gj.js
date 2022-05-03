@@ -12,4 +12,8 @@ export default {
 	list_of_tasks: 'તમે એપ પર કરી શકો તેવા કાર્યોની યાદી અહીં છે',
 	switch_language: 'ભાષા સ્વિચ કરો',
 	sign_out: 'સાઇન આઉટ કરો',
+	select_date: 'તારીખ પસંદ કરો',
+	invalid_qr_msg: 'અમાન્ય QR કોડ',
+	ok: 'બરાબર',
+	no_data: 'કોઈ ડેટા મળ્યો નથી',
 };

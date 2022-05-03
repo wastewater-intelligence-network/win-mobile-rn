@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Constants from './constants';
 import LabDetails from './LabDetails';
 import CollectionPointsModel from './CollectionPointsModel';
+import I18n from '../i18n/i18n';
 
 export default function WinCustomAlert({
 	displayMode,
@@ -124,7 +125,7 @@ export default function WinCustomAlert({
 								marginBottom: 10,
 							}}>
 							<Text style={{ color: 'white', margin: 10 }}>
-								OK
+								{I18n.t('ok')}
 							</Text>
 						</TouchableOpacity>
 					</View>

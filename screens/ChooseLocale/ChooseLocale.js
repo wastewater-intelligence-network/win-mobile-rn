@@ -12,12 +12,24 @@ export default function ChooseLocale({ navigation, route }) {
 			code: 'en',
 		},
 		{
-			name: 'हिन्दी',
-			code: 'hi',
-		},
-		{
 			name: 'ગુજરાતી',
 			code: 'gj',
+		},
+		{
+			name: 'தமிழ்',
+			code: 'tm',
+		},
+		{
+			name: 'অসমীয়া',
+			code: 'as',
+		},
+		{
+			name: 'ಕನ್ನಡ',
+			code: 'ka',
+		},
+		{
+			name: 'हिन्दी',
+			code: 'hi',
 		},
 	];
 

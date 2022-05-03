@@ -1,0 +1,20 @@
+export default {
+	sample_collection: 'மாதிரி எடுக்க',
+	sample_transport: 'மாதிரி போக்குவரத்து',
+	sample_accept: 'மாதிரியை ஏற்றுக்கொள்',
+	site_survey: 'தளம் கணக்கெடுப்பு',
+	site_survey_list: 'தள ஆய்வு பட்டியல்',
+	sample_list: 'மாதிரி பட்டியல்',
+	collection_point: 'மாதிரி தளம்',
+	inventory_management: 'சரக்கு மேலாண்மை',
+	schedules: 'அட்டவணைகள்',
+	sampling_status: 'மாதிரி நிலை',
+	list_of_tasks:
+		'பயன்பாட்டில் நீங்கள் செய்யக்கூடிய செயல்களின் பட்டியல் இங்கே',
+	switch_language: 'மொழியை மாற்றவும்',
+	sign_out: 'வெளியேறு',
+	select_date: 'தேதியைத் தேர்ந்தெடுக்கவும்',
+	invalid_qr_msg: 'தவறான QR குறியீடு',
+	ok: 'சரி',
+	no_data: 'வேறு தகவல்கள் இல்லை',
+};

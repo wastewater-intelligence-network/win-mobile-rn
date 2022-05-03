@@ -12,4 +12,8 @@ export default {
 	list_of_tasks: 'यहां उन कार्यों की सूची दी गई है जो आप ऐप पर कर सकते हैं',
 	switch_language: 'भाषा बदलें',
 	sign_out: 'साइन आउट',
+	select_date: 'तारीख़ चुनें',
+	invalid_qr_msg: 'अमान्य क्यूआर कोड',
+	ok: 'ठीक',
+	no_data: 'कोई डेटा नहीं मिला',
 };

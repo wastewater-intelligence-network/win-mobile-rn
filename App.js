@@ -21,6 +21,9 @@ import I18n from './i18n/i18n';
 import en from './i18n/en';
 import hi from './i18n/hi';
 import gj from './i18n/gj';
+import as from './i18n/as';
+import tm from './i18n/tm';
+import ka from './i18n/ka';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +32,9 @@ export default function App() {
 		en: en,
 		hi: hi,
 		gj: gj,
+		as: as,
+		tm: tm,
+		ka: ka,
 	};
 
 	useEffect(() => {

@@ -12,4 +12,8 @@ export default {
 	list_of_tasks: 'HERE IS A LIST OF TASKS YOU CAN DO ON THE APP',
 	switch_language: 'Switch Language',
 	sign_out: 'Sign Out',
+	select_date: 'Select Date',
+	invalid_qr_msg: 'Invalid QR Code',
+	ok: 'OK',
+	no_data: 'No Data Found',
 };

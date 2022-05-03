@@ -267,8 +267,10 @@ export default function SampleList({ navigation }) {
 		<View style={styles.container}>
 			<Text style={styles.pageHeading}>{I18n.t('sampling_status')}</Text>
 			<Text style={styles.dateStyle}>{Util.getFormatedDate(date)}</Text>
-			<TouchableOpacity onPress={() => setOpen(true)}>
-				<Text style={styles.chooseDateStyle}>--- Select Date ---</Text>
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => setOpen(true)}>
+				<Text style={styles.buttonText}>{I18n.t('select_date')}</Text>
 			</TouchableOpacity>
 			<Text style={styles.dateStyle}>
 				Samples available: {sampleList.length}
@@ -300,8 +302,10 @@ export default function SampleList({ navigation }) {
 							/>
 						</View>
 					) : (
-						<View style={styles.messageContainerStyle}>
-							<Text>No data found</Text>
+						<View style={styles.noDataView}>
+							<Text style={styles.noDataMsg}>
+								{I18n.t('no_data')}
+							</Text>
 						</View>
 					)}
 				</View>
@@ -450,5 +454,24 @@ const styles = StyleSheet.create({
 	messageContainerStyle: {
 		justifyContent: 'center',
 		height: Dimensions.get('window').height - 120,
+	},
+	noDataView: {
+		justifyContent: 'center',
+		marginVertical: 10,
+	},
+	noDataMsg: {
+		fontSize: 15,
+	},
+	button: {
+		backgroundColor: Constants.colors.primaryDark,
+		marginVertical: 6,
+		borderRadius: 7,
+		width: '50%',
+	},
+	buttonText: {
+		color: '#fff',
+		fontSize: 15,
+		textAlign: 'center',
+		padding: 10,
 	},
 });

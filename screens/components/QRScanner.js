@@ -11,6 +11,7 @@ import {
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import BarcodeMask from 'react-native-barcode-mask';
 
+import I18n from '../../i18n/i18n';
 import WinCustomAlert from '../WinCustomAlert';
 import WinQRScanAlert from '../WinQRScanAlert';
 import Constants from '../constants';
@@ -144,7 +145,7 @@ const QRScanner = forwardRef((props, ref) => {
 			/>
 			<WinCustomAlert
 				displayMode={'failed'}
-				displayTitle={'Invalid QR Code'}
+				displayTitle={I18n.t('invalid_qr_msg')}
 				displayMsg={
 					'QR code is of length 5 and only alphanumeric characters.'
 				}
