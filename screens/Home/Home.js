@@ -59,7 +59,7 @@ export default function Home({ navigation, route }) {
 	}, []);
 
 	const saveInDB = () => {
-		DBManager.saveRoles(route.params);
+		DBManager.saveRoles(route.params.roles);
 	};
 
 	// const inititealization = () => {
@@ -72,22 +72,22 @@ export default function Home({ navigation, route }) {
 		roles['common'] = [listObj, mapView];
 		roles[Constants.userRoles.collector] = [
 			collectorObj,
-			inventoryManagement,
-			schedules,
+			// inventoryManagement,
+			// schedules,
 		];
 		roles[Constants.userRoles.transporter] = [transporterObj];
 		roles[Constants.userRoles.technician] = [technicianObj];
 		roles[Constants.userRoles.admin] = [
 			collectorObj,
-			inventoryManagement,
-			schedules,
+			// inventoryManagement,
+			// schedules,
 			transporterObj,
 			technicianObj,
 			siteSurvey,
 			siteSuveyList,
 		];
 
-		let roleList = route.params;
+		let roleList = route.params.roles;
 		if (roleList === undefined) {
 			return;
 		}
@@ -182,10 +182,11 @@ export default function Home({ navigation, route }) {
 			return;
 		}
 
+		let i = 0;
 		rolesObjectList.forEach((role, idx) => {
 			view.push(
 				<TouchableHighlight
-					key={idx}
+					key={i}
 					style={styles.taskBox}
 					underlayColor="#ddd"
 					onPress={() => {
@@ -201,6 +202,7 @@ export default function Home({ navigation, route }) {
 					</>
 				</TouchableHighlight>,
 			);
+			i = i + 1;
 		});
 		return view;
 	};
