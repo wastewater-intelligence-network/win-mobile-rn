@@ -231,13 +231,15 @@ export default function SampleList({ navigation }) {
 						<Text style={styles.accordionBodyDataHeader}>
 							pH Value
 						</Text>
-						<Text>{renderData(item.additionalData, 'ph')}</Text>
+						<Text style={styles.accordionBodyDataText}>
+							{renderData(item.additionalData, 'ph')}
+						</Text>
 					</View>
 					<View>
 						<Text style={styles.accordionBodyDataHeader}>
 							Temp (°C)
 						</Text>
-						<Text>
+						<Text style={styles.accordionBodyDataText}>
 							{renderData(item.additionalData, 'temperature')}
 						</Text>
 					</View>
@@ -245,7 +247,9 @@ export default function SampleList({ navigation }) {
 						<Text style={styles.accordionBodyDataHeader}>
 							Inflow (MLD)
 						</Text>
-						<Text>{renderData(item.additionalData, 'inflow')}</Text>
+						<Text style={styles.accordionBodyDataText}>
+							{renderData(item.additionalData, 'inflow')}
+						</Text>
 					</View>
 				</View>
 			</View>
@@ -438,6 +442,10 @@ const styles = StyleSheet.create({
 	},
 	accordionBodyDataHeader: {
 		fontWeight: '800',
+		color: Constants.colors.grayColor,
+	},
+	accordionBodyDataText: {
+		color: Constants.colors.grayColor,
 	},
 	dateStyle: {
 		marginTop: -2,
