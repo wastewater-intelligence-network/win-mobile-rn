@@ -1,6 +1,6 @@
 import Authentication from './authentication';
 
-const WIN_API_ENDPOINT = 'http://192.168.0.108:8002'; //'https://win.niua.org:8081'
+const WIN_API_ENDPOINT = 'https://win.niua.org/api'; //'http://192.168.0.108:8002';
 
 import Constants from '../screens/constants';
 import { Alert } from 'react-native';
